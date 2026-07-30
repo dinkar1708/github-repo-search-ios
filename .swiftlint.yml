@@ -1,0 +1,121 @@
+# SwiftLint Configuration
+# Based on industry best practices and nalexn/clean-architecture-swiftui
+
+# Disabled Rules (too strict for existing codebase)
+disabled_rules:
+  - trailing_whitespace
+  - todo
+  - function_body_length
+  - type_body_length
+  - file_length
+
+# Opt-in Rules (enforce best practices)
+opt_in_rules:
+  - force_unwrapping
+  - explicit_type_interface
+  - discouraged_optional_boolean
+  - discouraged_optional_collection
+  - empty_count
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - implicitly_unwrapped_optional
+  - multiline_parameters
+  - operator_usage_whitespace
+  - overridden_super_call
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - sorted_first_last
+  - unneeded_parentheses_in_closure_argument
+  - vertical_parameter_alignment_on_call
+
+# Excluded paths
+excluded:
+  - Pods
+  - .build
+  - DerivedData
+  - vendor
+  - Carthage
+  - fastlane
+
+# Included paths (only Swift source files)
+included:
+  - github_repo_search_iOS_app
+
+# Line Length
+line_length:
+  warning: 120
+  error: 150
+  ignores_function_declarations: true
+  ignores_comments: true
+  ignores_urls: true
+
+# Function Parameter Count
+function_parameter_count:
+  warning: 5
+  error: 8
+
+# Identifier Name
+identifier_name:
+  min_length:
+    warning: 2
+    error: 1
+  max_length:
+    warning: 50
+    error: 60
+  excluded:
+    - id
+    - URL
+    - url
+    - vm
+    - vc
+
+# Type Name
+type_name:
+  min_length: 3
+  max_length: 50
+
+# Nesting
+nesting:
+  type_level:
+    warning: 2
+
+# Cyclomatic Complexity
+cyclomatic_complexity:
+  warning: 15
+  error: 25
+
+# Force Unwrapping (error level)
+force_unwrapping: error
+
+# Discouraged Direct Init
+discouraged_direct_init:
+  severity: warning
+
+# Custom Rules
+custom_rules:
+  # Discourage print() in production code
+  no_print:
+    name: "No Print Statements"
+    regex: '((^|\s)print\()'
+    match_kinds:
+      - identifier
+    message: "Use Logger instead of print() for production code"
+    severity: warning
+
+  # Discourage force casting
+  no_force_cast:
+    name: "No Force Cast"
+    regex: '(as!|as\?\!)'
+    message: "Avoid force casting, use optional binding or guard"
+    severity: warning
+
+  # Require TODO/FIXME to have ticket reference
+  todo_fixme_requires_ticket:
+    name: "TODO/FIXME Requires Ticket"
+    regex: '(TODO|FIXME)(?!.*\[.*\])'
+    message: "TODO/FIXME should reference a ticket: TODO[TICKET-123]"
+    severity: warning
+
+# Reporter (output format)
+reporter: "xcode"

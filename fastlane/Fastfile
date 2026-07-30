@@ -1,0 +1,154 @@
+# Fastlane Configuration
+# https://docs.fastlane.tools
+
+default_platform(:ios)
+
+platform :ios do
+  # Configuration
+  app_identifier = "dinakar.app.github-repo-search-iOS-app"
+  scheme = "github_repo_search_iOS_app"
+
+  desc "Run all tests"
+  lane :test do
+    run_tests(
+      scheme: scheme,
+      devices: ["iPhone 15"],
+      code_coverage: true,
+      output_directory: "./fastlane/test_output",
+      output_types: "html,junit",
+      fail_build: true
+    )
+  end
+
+  desc "Run SwiftLint"
+  lane :lint do
+    swiftlint(
+      mode: :lint,
+      strict: true,
+      raise_if_swiftlint_error: true,
+      config_file: ".swiftlint.yml"
+    )
+  end
+
+  desc "Build for simulator"
+  lane :build do
+    build_app(
+      scheme: scheme,
+      configuration: "Debug",
+      sdk: "iphonesimulator",
+      skip_package_ipa: true,
+      skip_codesigning: true
+    )
+  end
+
+  desc "Build for release"
+  lane :build_release do
+    build_app(
+      scheme: scheme,
+      configuration: "Release",
+      export_method: "app-store"
+    )
+  end
+
+  desc "Run tests and generate code coverage report"
+  lane :coverage do
+    test
+
+    # Generate coverage report using xcov
+    xcov(
+      scheme: scheme,
+      output_directory: "./fastlane/coverage",
+      html_report: true,
+      markdown_report: true,
+      minimum_coverage_percentage: 80.0
+    )
+  end
+
+  desc "Deploy to TestFlight"
+  lane :beta do
+    # Increment build number
+    increment_build_number(xcodeproj: "github_repo_search_iOS_app.xcodeproj")
+
+    # Build the app
+    build_app(
+      scheme: scheme,
+      configuration: "Release",
+      export_method: "app-store"
+    )
+
+    # Upload to TestFlight
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+
+    # Notify team (optional - configure Slack/Discord webhook)
+    # slack(
+    #   message: "New beta build available on TestFlight!"
+    # )
+  end
+
+  desc "Deploy to App Store"
+  lane :release do
+    # Ensure tests pass
+    test
+
+    # Lint code
+    lint
+
+    # Increment version
+    increment_version_number(
+      bump_type: "patch" # or "minor" or "major"
+    )
+
+    increment_build_number(xcodeproj: "github_repo_search_iOS_app.xcodeproj")
+
+    # Build for App Store
+    build_app(
+      scheme: scheme,
+      configuration: "Release",
+      export_method: "app-store"
+    )
+
+    # Upload to App Store
+    upload_to_app_store(
+      skip_metadata: false,
+      skip_screenshots: false,
+      submit_for_review: false # Set to true to auto-submit
+    )
+
+    # Tag the release
+    add_git_tag(
+      tag: "v#{get_version_number}"
+    )
+
+    push_git_tags
+  end
+
+  desc "Generate screenshots"
+  lane :screenshots do
+    snapshot(
+      scheme: scheme,
+      devices: [
+        "iPhone 15 Pro Max",
+        "iPhone 15 Pro",
+        "iPhone SE (3rd generation)",
+        "iPad Pro (12.9-inch) (6th generation)"
+      ]
+    )
+  end
+
+  desc "Clean derived data"
+  lane :clean do
+    clear_derived_data
+  end
+
+  # Error handling
+  error do |lane, exception|
+    puts "Error in lane #{lane}: #{exception.message}"
+    # Notify on error (optional)
+    # slack(
+    #   message: "Build failed in lane #{lane}: #{exception.message}",
+    #   success: false
+    # )
+  end
+end

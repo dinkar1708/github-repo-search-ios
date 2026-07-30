@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSPrivacyTracking</key>
+    <false/>
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array>
+        <!-- No data is collected and sent to external servers -->
+        <!-- All data stored locally in UserDefaults -->
+    </array>
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array>
+        <!-- UserDefaults API -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <!-- CA92.1: Access info from same app, for app functionality -->
+                <string>CA92.1</string>
+            </array>
+        </dict>
+        <!-- File timestamp API -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <!-- C617.1: Access to file timestamps for app functionality -->
+                <string>C617.1</string>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>

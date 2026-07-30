@@ -98,6 +98,25 @@ struct UserSearchView: View {
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
+
+                    // Retry button
+                    Button(action: {
+                        viewModel.refresh()
+                    }) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "arrow.clockwise")
+                            Text("Try Again")
+                        }
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                    }
+                    .padding(.top, 8)
+                    .accessibilityLabel("Retry search")
+                    .accessibilityHint("Double tap to retry the search")
                 }
                 .frame(maxHeight: .infinity)
                 .padding()

@@ -19,9 +19,31 @@ struct UserProfileView: View {
                     .padding(.top, 100)
                     .accessibilityLabel("Loading user profile")
             } else if let error = viewModel.errorMessage {
-                ErrorView(title: error)
-                    .padding(.top, 100)
-                    .accessibilityLabel("Error: \(error)")
+                VStack(spacing: 16) {
+                    ErrorView(title: error)
+
+                    // Retry button
+                    Button(action: {
+                        Task {
+                            await viewModel.refresh(username: username)
+                        }
+                    }) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "arrow.clockwise")
+                            Text("Try Again")
+                        }
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                    }
+                    .accessibilityLabel("Retry loading profile")
+                    .accessibilityHint("Double tap to retry loading the profile")
+                }
+                .padding(.top, 100)
+                .accessibilityLabel("Error: \(error)")
             } else if let profile = viewModel.userProfile {
                 VStack(spacing: 20) {
                     // Profile Header

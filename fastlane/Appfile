@@ -1,0 +1,11 @@
+# Fastlane Appfile
+# https://docs.fastlane.tools/advanced/Appfile/
+
+app_identifier("dinakar.app.github-repo-search-iOS-app") # The bundle identifier of your app
+apple_id("your_apple_id@example.com") # Your Apple Developer Portal email
+itc_team_id("123456789") # App Store Connect Team ID
+team_id("ABCDEF1234") # Developer Portal Team ID
+
+# Uncomment to use a specific Apple ID for different environments
+# For more information about the Appfile, see:
+#   https://docs.fastlane.tools/advanced/Appfile/
