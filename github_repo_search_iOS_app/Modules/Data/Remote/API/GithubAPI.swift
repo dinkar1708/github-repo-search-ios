@@ -27,7 +27,11 @@ enum GithubAPI {
                 url = ApiUrls.releaseUrl
                     print("RELEASE-------------->>>>>")
                 #endif
-                return URL(string: url)!
+                // Safe URL creation with fallback
+                guard let validURL = URL(string: url) else {
+                    fatalError("Invalid base URL configured: \(url)")
+                }
+                return validURL
             }
         }
 }

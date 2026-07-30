@@ -79,13 +79,15 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                     }
 
-                    Link(destination: URL(string: "https://github.com")!) {
-                        HStack {
-                            Label("GitHub", systemImage: "link")
-                            Spacer()
-                            Image(systemName: "arrow.up.right")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                    if let githubURL = URL(string: "https://github.com") {
+                        Link(destination: githubURL) {
+                            HStack {
+                                Label("GitHub", systemImage: "link")
+                                Spacer()
+                                Image(systemName: "arrow.up.right")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     }
                 } header: {

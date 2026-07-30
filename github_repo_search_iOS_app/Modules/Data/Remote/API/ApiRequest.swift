@@ -50,7 +50,13 @@ extension ApiRequest {
             .replacingOccurrences(of: "%3D", with: "=")
         components.percentEncodedQuery = components.percentEncodedQuery?
             .replacingOccurrences(of: "%26", with: "&")
-        var request = URLRequest(url: components.url!)
+
+        // Safe URL unwrapping
+        guard let finalURL = components.url else {
+            fatalError("Failed to build URL from components: \(components)")
+        }
+
+        var request = URLRequest(url: finalURL)
         request.httpMethod = method.rawValue
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         return request

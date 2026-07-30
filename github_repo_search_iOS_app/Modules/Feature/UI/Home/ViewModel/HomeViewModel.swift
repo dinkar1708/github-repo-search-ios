@@ -155,6 +155,19 @@ extension HomeViewModel {
     }
 }
 
+// MARK: - refresh
+extension HomeViewModel {
+    func refresh() async {
+        guard !searchText.isEmpty else { return }
+
+        // Reset pagination
+        currentPage = HomeConstants.searchPageDefaultPage
+
+        // Perform search
+        await searchInRepoNames(queryString: searchText)
+    }
+}
+
 // MARK: - message state from view model
 extension HomeViewModel {
     enum MessageState {

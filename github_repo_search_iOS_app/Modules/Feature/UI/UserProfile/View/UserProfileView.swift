@@ -17,9 +17,11 @@ struct UserProfileView: View {
             if viewModel.isLoading {
                 AppProgressView()
                     .padding(.top, 100)
+                    .accessibilityLabel("Loading user profile")
             } else if let error = viewModel.errorMessage {
                 ErrorView(title: error)
                     .padding(.top, 100)
+                    .accessibilityLabel("Error: \(error)")
             } else if let profile = viewModel.userProfile {
                 VStack(spacing: 20) {
                     // Profile Header
@@ -48,6 +50,8 @@ struct UserProfileView: View {
                                         .foregroundColor(.secondary)
                                 }
                             }
+                            .accessibilityLabel(viewModel.showForksOnly ? "Showing forks only" : "Show all repositories")
+                            .accessibilityHint("Double tap to toggle filter")
                         }
                         .padding(.horizontal)
 
@@ -56,6 +60,7 @@ struct UserProfileView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .padding()
+                                .accessibilityLabel("No repositories found")
                         } else {
                             ForEach(viewModel.filteredRepositories) { repo in
                                 Button(action: {
@@ -64,6 +69,9 @@ struct UserProfileView: View {
                                     UserRepositoryCell(repository: repo)
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .accessibilityElement(children: .combine)
+                                .accessibilityLabel("Repository: \(repo.name), \(repo.stargazersCount) stars, \(repo.language ?? "No language")")
+                                .accessibilityHint("Double tap to open in browser")
                             }
                         }
                     }
@@ -82,6 +90,8 @@ struct UserProfileView: View {
                         Image(systemName: favoritesManager.isFavoriteUser(username: username) ? "star.fill" : "star")
                             .foregroundColor(favoritesManager.isFavoriteUser(username: username) ? .yellow : .gray)
                     }
+                    .accessibilityLabel(favoritesManager.isFavoriteUser(username: username) ? "Remove from favorites" : "Add to favorites")
+                    .accessibilityHint("Double tap to toggle favorite")
                 }
             }
         }

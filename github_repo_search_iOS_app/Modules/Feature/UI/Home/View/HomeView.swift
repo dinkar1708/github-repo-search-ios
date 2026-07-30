@@ -34,6 +34,7 @@ struct HomeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Repositories")
+            .accessibilityLabel("GitHub Repositories Search")
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
@@ -58,14 +59,17 @@ struct HomeView: View {
                         Image(systemName: "book.fill")
                             .font(.caption)
                             .foregroundColor(.blue)
+                            .accessibilityHidden(true)
                         Text("\(homeViewModel.searchItems.count) repositories")
                             .font(.caption)
                             .fontWeight(.medium)
                             .foregroundColor(.secondary)
+                            .accessibilityLabel("\(homeViewModel.searchItems.count) repositories found")
                     }
                     Spacer()
                 }
                 .padding(.horizontal)
+                .accessibilityElement(children: .combine)
             }
         }
         .padding(.vertical, 12)
@@ -84,16 +88,20 @@ struct HomeView: View {
                     ProgressView()
                         .scaleEffect(1.3)
                         .tint(.blue)
+                        .accessibilityLabel("Loading")
                     Text("Searching repositories...")
                         .font(.callout)
                         .foregroundColor(.secondary)
                 }
                 .frame(maxHeight: .infinity)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Searching repositories")
             case .error(let error):
                 VStack(spacing: 16) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .font(.system(size: 50))
                         .foregroundColor(.orange)
+                        .accessibilityHidden(true)
                     Text("Oops!")
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -105,11 +113,14 @@ struct HomeView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .padding()
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Error: \(error)")
             case .emptySearchResult:
                 VStack(spacing: 16) {
                     Image(systemName: "magnifyingglass.circle.fill")
                         .font(.system(size: 50))
                         .foregroundColor(.gray)
+                        .accessibilityHidden(true)
                     Text("No Repositories Found")
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -119,6 +130,8 @@ struct HomeView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .padding()
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("No repositories found. Try a different search term")
             case .loaded:
                 if homeViewModel.searchItems.isEmpty {
                     VStack(spacing: 20) {
@@ -151,6 +164,8 @@ struct HomeView: View {
                     }
                     .frame(maxHeight: .infinity)
                     .padding()
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Search Repositories. Find millions of open source projects")
                 } else {
                     EmptyView()
                 }
@@ -173,6 +188,9 @@ struct HomeView: View {
                         )
                         .opacity(0)
                     )
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Repository: \(searchItem.name), by \(searchItem.owner.login), \(searchItem.stargazersCount) stars")
+                    .accessibilityHint("Double tap to view details")
             }
 
             // Loading indicator for pagination
@@ -193,6 +211,9 @@ struct HomeView: View {
         }
         .listStyle(.plain)
         .background(Color.clear)
+        .refreshable {
+            await homeViewModel.refresh()
+        }
     }
 }
 

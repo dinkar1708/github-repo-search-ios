@@ -31,6 +31,8 @@ struct FavoritesView: View {
                 .padding(.top, 8)
                 .padding(.bottom, 8)
                 .background(Color(UIColor.systemBackground))
+                .accessibilityLabel("Favorite type selector")
+                .accessibilityValue(selectedType.rawValue)
 
                 // Content
                 Group {
@@ -43,6 +45,9 @@ struct FavoritesView: View {
                                     NavigationLink(destination: UserProfileView(username: favorite.login)) {
                                         FavoriteUserCell(favorite: favorite)
                                     }
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityLabel("User: \(favorite.name ?? favorite.login), \(favorite.followers) followers")
+                                    .accessibilityHint("Double tap to view profile. Swipe left to delete")
                                 }
                                 .onDelete(perform: deleteUserFavorites)
                             }
@@ -57,6 +62,9 @@ struct FavoritesView: View {
                                     NavigationLink(destination: SearchItemDetailsView(searchItem: favorite.toSearchItem())) {
                                         FavoriteRepositoryCell(favorite: favorite)
                                     }
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityLabel("Repository: \(favorite.name), by \(favorite.ownerLogin), \(favorite.stargazersCount) stars")
+                                    .accessibilityHint("Double tap to view details. Swipe left to delete")
                                 }
                                 .onDelete(perform: deleteRepositoryFavorites)
                             }
@@ -77,6 +85,8 @@ struct FavoritesView: View {
                             Image(systemName: "trash")
                                 .foregroundColor(.red)
                         }
+                        .accessibilityLabel("Clear all favorites")
+                        .accessibilityHint("Double tap to clear all \(selectedType == .users ? "user" : "repository") favorites")
                     }
                 }
             }
@@ -262,6 +272,7 @@ struct EmptyFavoritesView: View {
             Image(systemName: "star.slash")
                 .font(.system(size: 60))
                 .foregroundColor(.gray)
+                .accessibilityHidden(true)
 
             Text("No Favorites Yet")
                 .font(.headline)
@@ -275,6 +286,8 @@ struct EmptyFavoritesView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.top, 60)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("No favorites yet. Start adding your favorite GitHub \(type == .users ? "users" : "repositories")")
     }
 }
 

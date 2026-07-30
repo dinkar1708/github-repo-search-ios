@@ -25,6 +25,7 @@ struct UserSearchView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Users")
+            .accessibilityLabel("GitHub Users Search")
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
@@ -48,14 +49,17 @@ struct UserSearchView: View {
                         Image(systemName: "person.2.fill")
                             .font(.caption)
                             .foregroundColor(.blue)
+                            .accessibilityHidden(true)
                         Text("\(viewModel.users.count) users")
                             .font(.caption)
                             .fontWeight(.medium)
                             .foregroundColor(.secondary)
+                            .accessibilityLabel("\(viewModel.users.count) users found")
                     }
                     Spacer()
                 }
                 .padding(.horizontal)
+                .accessibilityElement(children: .combine)
             }
         }
         .padding(.vertical, 12)
@@ -72,16 +76,20 @@ struct UserSearchView: View {
                     ProgressView()
                         .scaleEffect(1.3)
                         .tint(.blue)
+                        .accessibilityLabel("Loading")
                     Text("Searching users...")
                         .font(.callout)
                         .foregroundColor(.secondary)
                 }
                 .frame(maxHeight: .infinity)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Searching users")
             } else if let error = viewModel.errorMessage {
                 VStack(spacing: 16) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .font(.system(size: 50))
                         .foregroundColor(.orange)
+                        .accessibilityHidden(true)
                     Text("Oops!")
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -93,11 +101,14 @@ struct UserSearchView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .padding()
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Error: \(error)")
             } else if viewModel.users.isEmpty && !viewModel.searchText.isEmpty {
                 VStack(spacing: 16) {
                     Image(systemName: "magnifyingglass.circle.fill")
                         .font(.system(size: 50))
                         .foregroundColor(.gray)
+                        .accessibilityHidden(true)
                     Text("No Users Found")
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -107,6 +118,8 @@ struct UserSearchView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .padding()
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("No users found. Try a different username")
             } else if viewModel.users.isEmpty {
                 VStack(spacing: 20) {
                     // Icon with gradient background
@@ -138,6 +151,8 @@ struct UserSearchView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .padding()
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Search GitHub Users. Find millions of developers worldwide")
             }
         }
     }
@@ -153,6 +168,9 @@ struct UserSearchView: View {
                         viewModel.loadMoreUsers()
                     }
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("User: \(user.login)")
+                .accessibilityHint("Double tap to view profile")
             }
 
             if viewModel.isLoading && !viewModel.users.isEmpty {
