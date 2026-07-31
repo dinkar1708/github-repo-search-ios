@@ -153,8 +153,9 @@ final class KeychainFavoritesRepository: FavoritesRepository {
 // MARK: - Mock Implementation for Tests
 
 final class MockFavoritesRepository: FavoritesRepository {
-    var users: [FavoriteUser] = []
-    var repositories: [FavoriteRepository] = []
+    // Note: Used in tests on @MainActor - thread safety not required
+    nonisolated(unsafe) var users: [FavoriteUser] = []
+    nonisolated(unsafe) var repositories: [FavoriteRepository] = []
 
     func saveFavoriteUser(_ user: FavoriteUser) async throws {
         users.removeAll { $0.id == user.id }

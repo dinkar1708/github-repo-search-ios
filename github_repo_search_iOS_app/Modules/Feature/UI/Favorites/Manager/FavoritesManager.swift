@@ -275,12 +275,17 @@ final class FavoritesManager {
     // MARK: - Persistence
 
     private func loadFavorites() async {
-        do {
-            favoriteUsers = try await repository.getFavoriteUsers()
-            favoriteRepositories = try await repository.getFavoriteRepositories()
-        } catch {
-            // Silently fail - empty lists will be used
+        // Load users
+        if let users = try? await repository.getFavoriteUsers() {
+            favoriteUsers = users
+        } else {
             favoriteUsers = []
+        }
+
+        // Load repositories
+        if let repos = try? await repository.getFavoriteRepositories() {
+            favoriteRepositories = repos
+        } else {
             favoriteRepositories = []
         }
     }

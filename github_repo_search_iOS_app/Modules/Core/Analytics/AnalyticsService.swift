@@ -100,9 +100,10 @@ final class DefaultAnalyticsService: AnalyticsService {
 // MARK: - Mock Implementation for Tests
 
 final class MockAnalyticsService: AnalyticsService {
-    var trackedEvents: [AnalyticsEvent] = []
-    var userProperties: [String: String] = [:]
-    var screenViews: [String] = []
+    // Note: Used in tests on @MainActor - thread safety not required
+    nonisolated(unsafe) var trackedEvents: [AnalyticsEvent] = []
+    nonisolated(unsafe) var userProperties: [String: String] = [:]
+    nonisolated(unsafe) var screenViews: [String] = []
 
     func track(event: AnalyticsEvent) {
         trackedEvents.append(event)

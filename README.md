@@ -29,6 +29,7 @@ Comprehensive documentation organized by category. [View all documentation](docs
 - [Setup Guide](docs/SETUP.md) - Development environment configuration
 
 ### Technical Documentation
+- [Architecture Overview](docs/technical/ARCHITECTURE_OVERVIEW.md) - High-level architecture with diagrams
 - [Architecture Patterns](docs/technical/ARCHITECTURE_PATTERNS.md) - MVVM, DI, Repository pattern
 - [Dependency Injection](docs/technical/DEPENDENCY_INJECTION.md) - Property wrapper-based DI
 - [Keychain Storage](docs/technical/KEYCHAIN_STORAGE.md) - AES-256 secure storage
@@ -36,6 +37,8 @@ Comprehensive documentation organized by category. [View all documentation](docs
 - [Caching Strategy](docs/technical/CACHING.md) - NSCache with TTL
 - [Analytics](docs/technical/ANALYTICS.md) - Event tracking system
 - [Error Handling](docs/technical/ERROR_HANDLING.md) - Typed NetworkError
+- [API Rate Limiting](docs/technical/API_RATE_LIMITING.md) - GitHub API rate limit handling
+- [Security](docs/technical/SECURITY.md) - Security best practices and implementation
 - [Code Style](docs/technical/CODE_STYLE.md) - SwiftLint configuration
 
 ### Testing Documentation

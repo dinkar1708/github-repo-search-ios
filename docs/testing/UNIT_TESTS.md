@@ -5,18 +5,27 @@ Unit tests verify individual components in isolation using mocks and stubs.
 
 ## Current Status
 
-- Total: 4 unit tests
+- Total: 5 unit test files
 - Status: All passing
-- Coverage: 51.87% overall
+- Coverage: 51.87% overall (target: 70%+)
   - ApiClient: 88.89%
   - SearchItem: 100%
+  - HomeViewModel: Tested
+  - UserProfileViewModel: Tested
+  - FavoritesManager: Tested (NEW)
 
 ## Test Location
 
 ```
-Tests/github_repo_search_iOS_appTests/
-├── GitRepository_appTests.swift          # API and repository tests
-└── github_repo_search_iOS_appTests.swift # Performance baseline
+github_repo_search_iOS_app_UnitTests/
+├── Data/Network/
+│   ├── ApiClientTests.swift              # API client tests
+│   └── GithubRepositoryTests.swift       # Repository layer tests
+├── ViewModels/
+│   ├── HomeViewModelTests.swift          # Repository search ViewModel tests
+│   └── UserProfileViewModelTests.swift   # User profile ViewModel tests
+└── Feature/
+    └── FavoritesManagerTests.swift       # Favorites management tests (NEW)
 ```
 
 ## Test Cases
@@ -321,7 +330,62 @@ func testWithMockRepository() async throws {
 
 4. **Pagination Tests**
 5. **User Search Tests**
-6. **Favorites Tests**
+
+## New Test: FavoritesManagerTests (July 2026)
+
+### Overview
+Comprehensive test suite for FavoritesManager with 15 test methods covering:
+- User favorites (add, remove, check, clear)
+- Repository favorites (add, remove, check, clear)
+- Duplicate prevention
+- Analytics tracking
+- Model conversion (FavoriteUser, FavoriteRepository)
+
+### Test File
+**Location:** `github_repo_search_iOS_app_UnitTests/Feature/FavoritesManagerTests.swift`
+
+### Test Coverage
+
+**User Favorites:**
+- `testAddFavoriteUser_shouldAddUserToList` - Verifies user can be added to favorites
+- `testAddFavoriteUser_whenDuplicate_shouldNotAddAgain` - Prevents duplicate favorites
+- `testRemoveFavoriteUser_shouldRemoveUserFromList` - Verifies removal works
+- `testIsFavoriteUser_whenUserIsFavorite_shouldReturnTrue` - Checks favorite status
+- `testIsFavoriteUser_whenUserIsNotFavorite_shouldReturnFalse` - Non-favorite returns false
+- `testClearAllUserFavorites_shouldRemoveAllUsers` - Bulk clear works
+
+**Repository Favorites:**
+- `testAddFavoriteRepository_shouldAddRepositoryToList` - Adds repository to favorites
+- `testAddFavoriteRepository_whenDuplicate_shouldNotAddAgain` - No duplicates
+- `testRemoveFavoriteRepository_shouldRemoveRepositoryFromList` - Removal works
+- `testIsFavoriteRepository_whenRepositoryIsFavorite_shouldReturnTrue` - Check status
+- `testIsFavoriteRepository_whenRepositoryIsNotFavorite_shouldReturnFalse` - Non-favorite
+- `testClearAllRepositoryFavorites_shouldRemoveAllRepositories` - Bulk clear
+
+**Combined Operations:**
+- `testClearAllFavorites_shouldRemoveAllUsersAndRepositories` - Clear everything
+
+**Analytics:**
+- `testAddFavoriteUser_shouldTrackAnalyticsEvent` - Tracks favorite added
+- `testRemoveFavoriteUser_shouldTrackAnalyticsEvent` - Tracks favorite removed
+
+**Model Conversion:**
+- `testFavoriteUser_initFromUserProfile_shouldMapAllFields` - UserProfile → FavoriteUser
+- `testFavoriteRepository_initFromSearchItem_shouldMapAllFields` - SearchItem → FavoriteRepository
+- `testFavoriteRepository_toSearchItem_shouldConvertBackCorrectly` - Round-trip conversion
+
+### Test Dependencies
+Uses mock dependencies via DependencyContainer:
+- `MockFavoritesRepository` - In-memory storage
+- `MockAnalyticsService` - Event tracking verification
+
+### Running the Tests
+Tests are currently pending integration into Xcode project scheme. Once added, run with:
+```bash
+xcodebuild test -scheme github_repo_search_iOS_app \
+  -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+  -only-testing:github_repo_search_iOS_app_UnitTests/FavoritesManagerTests
+```
 
 ## Running Unit Tests
 

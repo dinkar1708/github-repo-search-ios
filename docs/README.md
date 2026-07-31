@@ -5,13 +5,16 @@
 - [Project Overview](ARCHITECTURE.md) - High-level architecture
 
 ## Technical Documentation
-- [Architecture](technical/ARCHITECTURE_PATTERNS.md) - MVVM, DI, and design patterns
+- [Architecture Overview](technical/ARCHITECTURE_OVERVIEW.md) - High-level architecture with diagrams (NEW)
+- [Architecture Patterns](technical/ARCHITECTURE_PATTERNS.md) - MVVM, DI, and design patterns
 - [Dependency Injection](technical/DEPENDENCY_INJECTION.md) - DI system implementation
 - [Secure Storage](technical/KEYCHAIN_STORAGE.md) - Keychain encryption
 - [Logging System](technical/LOGGING.md) - Structured logging with OSLog
 - [Caching Strategy](technical/CACHING.md) - Multi-layer caching
 - [Analytics](technical/ANALYTICS.md) - Event tracking system
 - [Error Handling](technical/ERROR_HANDLING.md) - NetworkError patterns
+- [API Rate Limiting](technical/API_RATE_LIMITING.md) - Rate limit handling and optimization (NEW)
+- [Security](technical/SECURITY.md) - Security best practices and measures (NEW)
 - [Code Style](technical/CODE_STYLE.md) - SwiftLint and formatting
 
 ## Testing Documentation
@@ -20,6 +23,8 @@
 - [UI Tests](testing/UI_TESTS.md) - Interface testing
 - [Integration Tests](testing/INTEGRATION_TESTS.md) - Component integration
 - [Performance Tests](testing/PERFORMANCE_TESTS.md) - Speed and metrics
+- [Stress Testing](testing/STRESS_TESTING.md) - Heavy load and extreme conditions testing
+- [Monitoring Test Metrics](testing/MONITORING_TEST_METRICS.md) - How to monitor memory, CPU during tests
 - [Code Coverage](testing/CODE_COVERAGE.md) - Coverage guide
 
 ## Product Documentation

@@ -94,7 +94,8 @@ private final class CacheEntry: NSObject {
 // MARK: - Mock Implementation for Tests
 
 final class MockCacheService: CacheService {
-    private var storage: [String: Any] = [:]
+    // Note: Used in tests on @MainActor - thread safety not required
+    nonisolated(unsafe) private var storage: [String: Any] = [:]
 
     func get<T: Decodable>(key: String) -> T? {
         return storage[key] as? T

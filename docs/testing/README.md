@@ -45,6 +45,20 @@ Tests for app performance metrics.
 
 - 1 launch performance test
 - Baseline measurements
+- Profiling with Xcode Instruments
+
+### Stress Tests
+Tests for app behavior under extreme conditions.
+
+**See:**
+- [STRESS_TESTING.md](STRESS_TESTING.md) - Comprehensive stress testing guide
+- [STRESS_TESTS_SETUP.md](STRESS_TESTS_SETUP.md) - Quick setup and running instructions
+
+**Tests:**
+- Heavy scrolling (60s continuous)
+- Rapid search operations
+- Extreme scrolling (100+ swipes)
+- Memory and CPU monitoring
 
 ## Quick Start
 
@@ -68,13 +82,16 @@ xcodebuild test -scheme github_repo_search_iOS_app \
 
 ```
 docs/testing/
-├── README.md                  # This file - testing overview
-├── UNIT_TESTS.md             # Unit test documentation
-├── UI_TESTS.md               # UI test documentation
-├── INTEGRATION_TESTS.md      # Integration test documentation
-├── PERFORMANCE_TESTS.md      # Performance test documentation
-├── CODE_COVERAGE.md          # Coverage guide and best practices
-└── TESTING_GUIDE.md          # General testing guide
+├── README.md                    # This file - testing overview
+├── UNIT_TESTS.md               # Unit test documentation
+├── UI_TESTS.md                 # UI test documentation
+├── INTEGRATION_TESTS.md        # Integration test documentation
+├── PERFORMANCE_TESTS.md        # Performance test documentation
+├── STRESS_TESTING.md           # Stress testing guide (comprehensive)
+├── STRESS_TESTS_SETUP.md       # Quick setup and running stress tests
+├── MONITORING_TEST_METRICS.md  # How to monitor tests (memory, CPU, metrics)
+├── CODE_COVERAGE.md            # Coverage guide and best practices
+└── TESTING_GUIDE.md            # General testing guide
 ```
 
 ## Coverage Goals
