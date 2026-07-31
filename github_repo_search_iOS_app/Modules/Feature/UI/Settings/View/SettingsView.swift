@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct SettingsView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
@@ -13,8 +14,10 @@ struct SettingsView: View {
     @State private var showingClearCacheAlert = false
     @State private var cacheCleared = false
 
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app.github", category: "settings")
+
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 // MARK: - Appearance Section
                 Section {
@@ -132,7 +135,7 @@ struct SettingsView: View {
                 try FileManager.default.removeItem(at: file)
             }
         } catch {
-            print("Failed to clear temp directory: \(error)")
+            logger.error("Failed to clear temp directory: \(error.localizedDescription)")
         }
 
         cacheCleared = true

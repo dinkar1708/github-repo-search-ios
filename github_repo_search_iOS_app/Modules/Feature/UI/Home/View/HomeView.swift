@@ -21,7 +21,7 @@ struct HomeView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // Compact header with search
                 headerView
@@ -36,7 +36,6 @@ struct HomeView: View {
             .navigationTitle("Repositories")
             .accessibilityLabel("GitHub Repositories Search")
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 
     private var headerView: some View {

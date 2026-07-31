@@ -1,0 +1,19 @@
+name: Deploy to TestFlight
+
+on:
+  push:
+    branches: [ 'release/*' ]
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy-shared.yml
+    with:
+      environment: 'TestFlight'
+      fastlane_lane: 'beta'
+    secrets:
+      FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
+      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+      FASTLANE_ITC_TEAM_ID: ${{ secrets.FASTLANE_ITC_TEAM_ID }}
+      FASTLANE_TEAM_ID: ${{ secrets.FASTLANE_TEAM_ID }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}

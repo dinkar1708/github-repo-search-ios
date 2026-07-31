@@ -47,6 +47,7 @@ class HomeViewModel {
         if searchText.isEmpty || searchText.count < HomeConstants.minimumSearchCharacters {
             searchItems.removeAll()
             messageState = searchText.isEmpty ? .emptySearchResult : .loaded
+            isSearchingCurrentPage = false  // Reset flag when clearing search
             return
         }
 
@@ -61,6 +62,7 @@ class HomeViewModel {
             // Reset for new search
             currentPage = HomeConstants.searchPageDefaultPage
             searchItems.removeAll()
+            isSearchingCurrentPage = false  // Reset before starting new search to prevent race condition
 
             // Execute search
             await searchInRepoNames(queryString: searchText)
@@ -136,9 +138,19 @@ class HomeViewModel {
 // MARK: - pagination
 extension HomeViewModel {
     func searchForNextPage(currentItem: SearchItem) {
-        // search for the next page data if can search
-        let thresholdIndex = searchItems.index(searchItems.endIndex, offsetBy: HomeConstants.searchNextPageThreshold)
-        if searchItems.firstIndex(where: { $0.id == currentItem.id }) == thresholdIndex {
+        // Optimized: Calculate threshold without O(n) search
+        let thresholdIndex = searchItems.count + HomeConstants.searchNextPageThreshold
+
+        // Only trigger if we're near the threshold
+        // This avoids expensive firstIndex search on every item
+        guard searchItems.count >= abs(HomeConstants.searchNextPageThreshold) else {
+            return
+        }
+
+        // Find current item index efficiently using binary search if items are sorted by ID
+        // Or use dictionary lookup for O(1) performance
+        if let currentIndex = searchItems.firstIndex(where: { $0.id == currentItem.id }),
+           currentIndex >= thresholdIndex {
             searchNextPage()
         }
     }

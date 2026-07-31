@@ -68,7 +68,7 @@ struct SearchItemCell: View {
                     if let language = searchItem.language {
                         HStack(spacing: 4) {
                             Circle()
-                                .fill(languageColor(for: language))
+                                .fill(Color.languageColor(for: language))
                                 .frame(width: 8, height: 8)
                             Text(language)
                                 .font(.caption)
@@ -113,20 +113,7 @@ struct SearchItemCell: View {
     }
 
     // Helper function to get language color
-    private func languageColor(for language: String) -> Color {
-        switch language.lowercased() {
-        case "swift": return .orange
-        case "javascript", "typescript": return .yellow
-        case "python": return .blue
-        case "java": return .red
-        case "kotlin": return .purple
-        case "go": return Color(red: 0, green: 0.7, blue: 0.9)
-        case "rust": return Color(red: 0.87, green: 0.45, blue: 0.3)
-        case "ruby": return .red
-        case "php": return Color(red: 0.5, green: 0.4, blue: 0.7)
-        default: return .gray
-        }
-    }
+    // Removed: languageColor() now centralized in Color+Extensions
 }
 
 // Legacy support for name-only cell

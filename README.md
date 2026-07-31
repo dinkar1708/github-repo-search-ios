@@ -178,6 +178,18 @@ For detailed coverage documentation, command line usage, and best practices, see
 - Open project in xcode
 - Select team signing and capability
 
+## CI/CD Workflows
+
+> ⚠️ **Note**: GitHub Actions workflows are configured but not yet tested in production. The workflows may require adjustments based on your specific Apple Developer account setup and signing configuration. Please test and adjust as needed before relying on automated deployments.
+
+**Available Workflows:**
+- `build-and-test.yml` - Build and test on `release/*` branches
+- `deploy-testflight.yml` - Deploy to TestFlight
+- `deploy-appstore.yml` - Deploy to App Store (requires `[release]` in commit message)
+- `deploy-shared.yml` - Reusable deployment workflow
+
+See [docs/SETUP.md](docs/SETUP.md) for GitHub Actions secrets configuration.
+
 ## Technology Stack
 
 **Language:** Swift 5.9+ with modern concurrency
@@ -274,24 +286,28 @@ All API calls use async/await with proper error handling.
 ## TODO List
 
 **Completed:**
-- [x] Add repository favorites functionality (COMPLETED July 2026)
-- [x] Add segmented control for Users/Repositories in Favorites tab (COMPLETED July 2026)
-- [x] Move favorite button from list to details screen (COMPLETED July 2026)
-- [x] Fix favorites navigation to open in-app (COMPLETED July 2026)
-- [x] UI improvements: compact navigation, remove duplicate chevrons (COMPLETED July 2026)
-- [x] Add app screenshots to documentation (COMPLETED July 2026)
-- [x] Simplify documentation structure (COMPLETED July 2026)
+- [x] Add repository favorites functionality
+- [x] Add segmented control for Users/Repositories in Favorites tab
+- [x] Move favorite button from list to details screen
+- [x] Fix favorites navigation to open in-app
+- [x] UI improvements: compact navigation, remove duplicate chevrons
+- [x] Add app screenshots to documentation
+- [x] Simplify documentation structure
+- [x] Add CI/CD pipeline (GitHub Actions + Fastlane)
+- [x] Implement comprehensive logging system (OSLog)
+- [x] Add pull-to-refresh on all tabs
+- [x] Add unit tests for new ViewModels
+- [x] Fix pagination bugs and performance issues
+- [x] Migrate to NavigationStack (iOS 16+)
 
 **Pending:**
 - [ ] Add unit tests for FavoritesManager (repository favorites)
-- [ ] Add unit tests for new ViewModels (UserSearchViewModel, UserProfileViewModel)
 - [ ] Add UI tests for new features (User Search, Favorites with repositories)
-- [ ] Add CI/CD pipeline (Bitrise/Fastlane)
-- [ ] Implement comprehensive logging system
-- [ ] Add pull-to-refresh on all tabs
 - [ ] Implement search history
 - [ ] Replace placeholder app icon with custom design
 - [ ] Add animation transitions between screens
+- [ ] Migrate to Swift Testing framework (WWDC 2024)
+- [ ] Add deep linking support
 
 # Meta
 - Dinakar Maurya

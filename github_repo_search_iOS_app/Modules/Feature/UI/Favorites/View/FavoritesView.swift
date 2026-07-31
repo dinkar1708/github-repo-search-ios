@@ -18,7 +18,7 @@ struct FavoritesView: View {
     @State private var selectedType: FavoriteType = .users
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // Segmented Control
                 Picker("Favorite Type", selection: $selectedType) {
@@ -215,7 +215,7 @@ struct FavoriteRepositoryCell: View {
                     if let language = favorite.language {
                         HStack(spacing: 4) {
                             Circle()
-                                .fill(languageColor(for: language))
+                                .fill(Color.languageColor(for: language))
                                 .frame(width: 8, height: 8)
                             Text(language)
                                 .font(.caption)
@@ -247,20 +247,7 @@ struct FavoriteRepositoryCell: View {
         .padding(.vertical, 8)
     }
 
-    private func languageColor(for language: String) -> Color {
-        switch language.lowercased() {
-        case "swift": return .orange
-        case "javascript", "typescript": return .yellow
-        case "python": return .blue
-        case "java": return .red
-        case "kotlin": return .purple
-        case "go": return Color(red: 0, green: 0.7, blue: 0.9)
-        case "rust": return Color(red: 0.87, green: 0.45, blue: 0.3)
-        case "ruby": return .red
-        case "php": return Color(red: 0.5, green: 0.4, blue: 0.7)
-        default: return .gray
-        }
-    }
+    // Removed: languageColor() now centralized in Color+Extensions
 }
 
 // MARK: - Empty Favorites View

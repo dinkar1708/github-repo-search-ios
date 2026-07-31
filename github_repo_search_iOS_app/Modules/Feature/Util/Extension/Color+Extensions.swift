@@ -27,6 +27,35 @@ extension Color {
 }
 
 
+// MARK:- Programming Language Colors
+extension Color {
+    /// Returns the color associated with a programming language
+    /// - Parameter language: The programming language name
+    /// - Returns: Color representing the language
+    static func languageColor(for language: String) -> Color {
+        switch language.lowercased() {
+        case "swift":
+            return .orange
+        case "javascript", "typescript":
+            return .yellow
+        case "python":
+            return .blue
+        case "java", "kotlin":
+            return Color(red: 0.7, green: 0.3, blue: 0.2)
+        case "ruby":
+            return .red
+        case "go":
+            return Color(red: 0.0, green: 0.7, blue: 0.8)
+        case "rust":
+            return Color(red: 0.9, green: 0.5, blue: 0.2)
+        case "c++", "c", "c#":
+            return Color(red: 0.4, green: 0.2, blue: 0.6)
+        default:
+            return .gray
+        }
+    }
+}
+
 // MARK:- Extra supporting Methods
 extension Color {
     func uiColor() -> UIColor {

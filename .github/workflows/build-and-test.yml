@@ -1,10 +1,10 @@
-name: iOS CI
+name: Build and Test
 
 on:
   push:
-    branches: [ release, develop ]
+    branches: [ 'release/*' ]
   pull_request:
-    branches: [ release, develop ]
+    branches: [ 'release/*' ]
 
 jobs:
   build-and-test:

@@ -293,7 +293,7 @@ struct UserRepositoryCell: View {
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         UserProfileView(username: "octocat")
     }
 }

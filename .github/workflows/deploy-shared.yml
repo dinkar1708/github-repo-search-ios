@@ -1,0 +1,60 @@
+name: Deploy (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        description: 'Deployment environment (testflight or appstore)'
+      fastlane_lane:
+        required: true
+        type: string
+        description: 'Fastlane lane to run (beta or release)'
+    secrets:
+      FASTLANE_APPLE_ID:
+        required: true
+      FASTLANE_PASSWORD:
+        required: true
+      FASTLANE_ITC_TEAM_ID:
+        required: true
+      FASTLANE_TEAM_ID:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      MATCH_GIT_BASIC_AUTHORIZATION:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode.app
+
+    - name: Show Xcode version
+      run: xcodebuild -version
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+
+    - name: Install Fastlane
+      run: gem install fastlane
+
+    - name: Run Fastlane ${{ inputs.fastlane_lane }}
+      env:
+        FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
+        FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+        FASTLANE_ITC_TEAM_ID: ${{ secrets.FASTLANE_ITC_TEAM_ID }}
+        FASTLANE_TEAM_ID: ${{ secrets.FASTLANE_TEAM_ID }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+      run: fastlane ${{ inputs.fastlane_lane }}

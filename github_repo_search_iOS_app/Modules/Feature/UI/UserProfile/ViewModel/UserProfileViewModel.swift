@@ -15,8 +15,13 @@ final class UserProfileViewModel {
     var userProfile: UserProfile?
     var userRepositories: [UserRepository] = []
     var isLoading = false
+    var isLoadingMore = false
     var errorMessage: String?
     var showForksOnly = false
+
+    private var currentPage = 1
+    private let perPage = 30
+    private var hasMoreData = true
 
     init(repository: GithubRepository = DefaultGithubRepository()) {
         self.repository = repository
@@ -32,13 +37,17 @@ final class UserProfileViewModel {
     func loadUserProfile(username: String) async {
         isLoading = true
         errorMessage = nil
+        currentPage = 1
+        hasMoreData = true
 
         do {
             async let profile = repository.getUserProfile(username: username)
-            async let repos = repository.getUserRepositories(username: username, perPage: 100, page: 1)
+            let repos = try await repository.getUserRepositories(username: username, perPage: perPage, page: currentPage)
 
             userProfile = try await profile
-            userRepositories = try await repos
+            userRepositories = repos
+            hasMoreData = repos.count >= perPage
+            currentPage = 2
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -52,5 +61,34 @@ final class UserProfileViewModel {
 
     func toggleForksFilter() {
         showForksOnly.toggle()
+    }
+
+    // MARK: - Pagination
+    func loadMoreRepositoriesIfNeeded(username: String, currentItem: UserRepository) async {
+        guard !isLoadingMore && hasMoreData else { return }
+
+        // Trigger load more when user reaches 5 items from the end
+        let thresholdIndex = userRepositories.count - 5
+        if let index = userRepositories.firstIndex(where: { $0.id == currentItem.id }),
+           index >= thresholdIndex {
+            await loadMoreRepositories(username: username)
+        }
+    }
+
+    private func loadMoreRepositories(username: String) async {
+        guard !isLoadingMore && hasMoreData else { return }
+
+        isLoadingMore = true
+
+        do {
+            let repos = try await repository.getUserRepositories(username: username, perPage: perPage, page: currentPage)
+            userRepositories.append(contentsOf: repos)
+            hasMoreData = repos.count >= perPage
+            currentPage += 1
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+
+        isLoadingMore = false
     }
 }

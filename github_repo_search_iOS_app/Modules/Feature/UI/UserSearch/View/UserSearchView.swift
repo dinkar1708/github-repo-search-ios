@@ -12,7 +12,7 @@ struct UserSearchView: View {
     @State private var placeholder = "Search GitHub users..."
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // Compact header with search
                 headerView
@@ -27,7 +27,6 @@ struct UserSearchView: View {
             .navigationTitle("Users")
             .accessibilityLabel("GitHub Users Search")
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 
     private var headerView: some View {
