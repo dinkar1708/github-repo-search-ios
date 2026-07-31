@@ -1,22 +1,65 @@
 # GitHub Repository Search iOS App
 
-A modern, native iOS application for searching GitHub repositories and users with a beautiful, intuitive user interface built entirely with SwiftUI.
+Modern iOS app for searching GitHub repositories and users. Built with SwiftUI, MVVM architecture, and production-ready infrastructure.
 
-## About This Project
+## Quick Info
 
-This iOS app achieves feature parity with the Android GitHub Cruise app. Both apps share the same core features for searching repositories, users, viewing profiles, and managing favorites. The implementation follows native platform conventions (SwiftUI for iOS, Jetpack Compose for Android) while maintaining consistent functionality.
+- **Platform**: iOS 17.0+
+- **Language**: Swift 5.9+
+- **UI**: SwiftUI with @Observable
+- **Architecture**: MVVM + Repository pattern
+- **Build Status**: BUILD SUCCEEDED
+- **No External Dependencies**: 100% native iOS
 
-### 📚 Documentation
+## Key Features
+- Repository and User Search with debouncing
+- User profiles with repository listings
+- Secure favorites (Keychain encryption)
+- Tab navigation (Users, Repositories, Favorites, Settings)
+- Dark mode support
+- Multi-language (English, Japanese)
+- Offline capability with caching
 
-**iOS Documentation:**
-- [Features Guide](docs/FEATURES.md) - Complete feature overview
-- [Testing Guide](docs/TESTING.md) - Testing documentation
+## Documentation
 
-**Master Documentation** (GitHub Cruise Android):
+Comprehensive documentation organized by category. [View all documentation](docs/README.md)
 
-For complete API specs and cross-platform guidelines, see the Android repository:
-- [Master Feature Specification](https://github.com/dinkar1708/GithubCruiseAndroid/blob/main/docs/master/MASTER_FEATURE_SPECIFICATION.md)
-- [GitHub API Specification](https://github.com/dinkar1708/GithubCruiseAndroid/blob/main/docs/master/GITHUB_API_SPECIFICATION.md)
+### Getting Started
+- [Quick Start Guide](docs/getting-started/QUICKSTART.md) - Setup and run in 5 minutes
+- [Setup Guide](docs/SETUP.md) - Development environment configuration
+
+### Technical Documentation
+- [Architecture Patterns](docs/technical/ARCHITECTURE_PATTERNS.md) - MVVM, DI, Repository pattern
+- [Dependency Injection](docs/technical/DEPENDENCY_INJECTION.md) - Property wrapper-based DI
+- [Keychain Storage](docs/technical/KEYCHAIN_STORAGE.md) - AES-256 secure storage
+- [Logging System](docs/technical/LOGGING.md) - OSLog with type-safe categories
+- [Caching Strategy](docs/technical/CACHING.md) - NSCache with TTL
+- [Analytics](docs/technical/ANALYTICS.md) - Event tracking system
+- [Error Handling](docs/technical/ERROR_HANDLING.md) - Typed NetworkError
+- [Code Style](docs/technical/CODE_STYLE.md) - SwiftLint configuration
+
+### Testing Documentation
+- [Testing Overview](docs/testing/README.md) - Testing strategy (8 tests, 51.87% coverage)
+- [Unit Tests](docs/testing/UNIT_TESTS.md) - Component testing guide
+- [UI Tests](docs/testing/UI_TESTS.md) - XCUITest guide
+- [Integration Tests](docs/testing/INTEGRATION_TESTS.md) - Multi-component testing
+- [Performance Tests](docs/testing/PERFORMANCE_TESTS.md) - Metrics and benchmarks
+- [Code Coverage](docs/testing/CODE_COVERAGE.md) - Coverage best practices
+
+### Product Documentation
+- [Features](docs/FEATURES.md) - Complete feature list
+- [User Flows](docs/product/USER_FLOWS.md) - User interaction patterns
+- [UI/UX Design](docs/product/UI_UX_DESIGN.md) - Apple HIG compliance
+- [API Integration](docs/product/API_INTEGRATION.md) - GitHub REST API v3
+
+### References
+- [Best Practices](docs/references.md) - iOS development resources
+- [All Documentation Index](docs/README.md) - Complete documentation hub
+
+### Cross-Platform Specifications
+This iOS app follows master specifications from the Android version:
+- [Master Feature Spec](https://github.com/dinkar1708/GithubCruiseAndroid/blob/main/docs/master/MASTER_FEATURE_SPECIFICATION.md)
+- [GitHub API Spec](https://github.com/dinkar1708/GithubCruiseAndroid/blob/main/docs/master/GITHUB_API_SPECIFICATION.md)
 - [Master Best Practices](https://github.com/dinkar1708/GithubCruiseAndroid/blob/main/docs/master/MASTER_BEST_PRACTICES.md)
 
 ## Features
@@ -117,22 +160,26 @@ The app consists of 4 main tabs:
 
 ## Test Summary
 
-**Total: 8 test cases (all implemented and passing!)**
+**Comprehensive test suite with multiple test types**
 
-| Test Type     | Framework          | What It Verifies                    | Count | Status |
-|---------------|--------------------|------------------------------------|-------|--------|
-| Unit          | XCTest             | One function or class, isolated    | 4     | ✓ Pass |
-| Integration   | XCTest             | Multiple components together       | 0     | N/A    |
-| UI            | XCTest (XCUI)      | Real user flows on screen          | 3     | ✓ Pass |
-| Performance   | XCTest (Metrics)   | Speed and memory over time         | 1     | ✓ Pass |
+| Test Type     | Framework          | Test Files | What It Verifies                    |
+|---------------|--------------------|------------|-------------------------------------|
+| Unit          | XCTest             | 4 files    | Components in isolation             |
+| Integration   | XCTest             | 2 files    | Multiple components together        |
+| UI            | XCTest (XCUI)      | 1 file     | Real user flows on screen           |
+| Performance   | XCTest (Metrics)   | 2 files    | Speed and memory benchmarks         |
 
-**Code Coverage: 51.87%** (Improved from 26.68%!)
+**Test Targets:**
+- `github_repo_search_iOS_app_UnitTests` - Unit tests (ApiClient, ViewModels, Repository)
+- `github_repo_search_iOS_app_IntegrationTests` - Integration tests (User flows, Search flows)
+- `github_repo_search_iOS_app_UITests` - UI tests (HomeView interactions)
+- `github_repo_search_iOS_app_PerformanceTests` - Performance tests (Launch, API performance)
+
+**Code Coverage: 51.87%** (Target: 70%+)
 - ApiClient: 88.89%
 - HomeView: 87.63%
 - AppSearchBar: 100%
 - SearchItem: 100%
-
-**All tests passing: 8/8** (100% success rate)
 
 ## Quick Start
 From Xcode, click **Product → Test** (or press `⌘U`) - it will run all test cases written inside:

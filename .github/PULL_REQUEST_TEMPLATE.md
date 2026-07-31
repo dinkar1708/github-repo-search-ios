@@ -42,12 +42,19 @@ Closes #
 - [ ] Accessibility labels added for UI changes
 - [ ] Privacy considerations addressed
 
+## Documentation
+- [ ] Updated relevant docs in `docs/` folder if needed
+- [ ] Technical docs updated (Architecture, DI, Logging, etc.)
+- [ ] Testing docs updated if tests added
+- [ ] API documentation updated if endpoints changed
+- [ ] README.md updated if features added
+- [ ] Code comments added for complex logic
+
 ## Deployment Checklist
 - [ ] Build succeeds without errors
 - [ ] Code coverage maintained or improved
 - [ ] No breaking changes to existing APIs
 - [ ] Migration guide provided (if breaking changes)
-- [ ] Documentation updated
 
 ## Reviewer Notes
 <!-- Any specific areas you'd like reviewers to focus on? -->

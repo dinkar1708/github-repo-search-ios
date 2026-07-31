@@ -7,17 +7,23 @@ This document contains curated links to official Apple documentation and industr
 ### Architecture & Patterns
 - **Architecture**: MVVM (Model-View-ViewModel) with Repository pattern
 - **UI Framework**: SwiftUI with modern `@Observable` macro (iOS 17+)
-- **Dependency Injection**: Constructor-based injection with protocol-oriented design
+- **Dependency Injection**: Property wrapper-based DI (`@Injected`) with DependencyContainer
 - **State Management**: `@State` and `@Observable` (not `ObservableObject`)
 - **Concurrency**: Swift async/await with `@MainActor`
 - **Data Flow**: View → ViewModel → Repository → API Client
-- **Persistence**: UserDefaults for favorites, Singleton pattern for `FavoritesManager`
+- **Persistence**: Keychain for secure favorites storage (migrated from UserDefaults)
+- **Logging**: OSLog with type-safe categories via `LogCategory` enum
+- **Caching**: Multi-layer NSCache with TTL support
+- **Analytics**: Event-based tracking abstraction layer
 
 ### Key Design Decisions
 - ✅ Modern Swift patterns (Observable macro, async/await)
-- ✅ No third-party DI frameworks (manual constructor injection)
+- ✅ Custom DI framework with @Injected property wrapper (zero boilerplate)
 - ✅ Protocol-based repository layer for testability
 - ✅ Sendable conformance for thread safety
+- ✅ Keychain encryption for sensitive data (AES-256)
+- ✅ Structured logging with OSLog categories
+- ✅ Type-safe enums for logger categories and analytics events
 - ✅ Shared singleton for favorites management
 
 ---
