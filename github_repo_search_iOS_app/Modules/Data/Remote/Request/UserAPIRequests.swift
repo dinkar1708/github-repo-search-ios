@@ -28,7 +28,7 @@ extension GithubAPI {
     }
 
     static func searchUsers(requestObject: SearchUsersRequest) async throws -> SearchUser {
-        var urlRequest = requestObject.buildURLRequest()
+        var urlRequest = try requestObject.buildURLRequest()
         urlRequest.httpBody = requestObject.encodeRequestBody()
         urlRequest.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         let response: ApiClient.Response<SearchUser> = try await sharedApiClient.run(urlRequest)
@@ -45,7 +45,7 @@ extension GithubAPI {
     }
 
     static func getUserProfile(requestObject: GetUserProfileRequest) async throws -> UserProfile {
-        var urlRequest = requestObject.buildURLRequest()
+        var urlRequest = try requestObject.buildURLRequest()
         urlRequest.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         let response: ApiClient.Response<UserProfile> = try await sharedApiClient.run(urlRequest)
         return response.value
@@ -68,7 +68,7 @@ extension GithubAPI {
     }
 
     static func getUserRepositories(requestObject: GetUserRepositoriesRequest) async throws -> [UserRepository] {
-        var urlRequest = requestObject.buildURLRequest()
+        var urlRequest = try requestObject.buildURLRequest()
         urlRequest.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         let response: ApiClient.Response<[UserRepository]> = try await sharedApiClient.run(urlRequest)
         return response.value

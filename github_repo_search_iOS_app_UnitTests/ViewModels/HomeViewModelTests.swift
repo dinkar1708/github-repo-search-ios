@@ -17,6 +17,14 @@ final class HomeViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockRepository = MockGithubRepository()
+
+        // Set up DI container with mock dependencies
+        DependencyContainer.shared = .test(
+            githubRepository: mockRepository,
+            cacheService: MockCacheService(),
+            analyticsService: MockAnalyticsService()
+        )
+
         sut = HomeViewModel(state: .loaded)
     }
 

@@ -178,14 +178,16 @@ struct FavoriteRepository: Codable, Identifiable {
 final class FavoritesManager {
     static let shared = FavoritesManager()
 
-    private let userFavoritesKey = "github_user_favorites"
-    private let repoFavoritesKey = "github_repo_favorites"
+    @ObservationIgnored @Injected(\.favoritesRepository) private var repository
+    @ObservationIgnored @Injected(\.analyticsService) private var analytics
 
     var favoriteUsers: [FavoriteUser] = []
     var favoriteRepositories: [FavoriteRepository] = []
 
     private init() {
-        loadFavorites()
+        Task {
+            await loadFavorites()
+        }
     }
 
     // MARK: - User Favorites
@@ -196,13 +198,20 @@ final class FavoritesManager {
         // Avoid duplicates
         if !favoriteUsers.contains(where: { $0.id == favorite.id }) {
             favoriteUsers.append(favorite)
-            saveFavorites()
+            Task {
+                try? await repository.saveFavoriteUser(favorite)
+                analytics.track(event: .favoriteAdded(type: .user))
+            }
         }
     }
 
     func removeFavoriteUser(username: String) {
+        guard let user = favoriteUsers.first(where: { $0.login == username }) else { return }
         favoriteUsers.removeAll { $0.login == username }
-        saveFavorites()
+        Task {
+            try? await repository.removeFavoriteUser(id: user.id)
+            analytics.track(event: .favoriteRemoved(type: .user))
+        }
     }
 
     func isFavoriteUser(username: String) -> Bool {
@@ -210,8 +219,13 @@ final class FavoritesManager {
     }
 
     func clearAllUserFavorites() {
+        let userIds = favoriteUsers.map { $0.id }
         favoriteUsers.removeAll()
-        saveFavorites()
+        Task {
+            for id in userIds {
+                try? await repository.removeFavoriteUser(id: id)
+            }
+        }
     }
 
     // MARK: - Repository Favorites
@@ -222,13 +236,19 @@ final class FavoritesManager {
         // Avoid duplicates
         if !favoriteRepositories.contains(where: { $0.id == favorite.id }) {
             favoriteRepositories.append(favorite)
-            saveFavorites()
+            Task {
+                try? await self.repository.saveFavoriteRepository(favorite)
+                analytics.track(event: .favoriteAdded(type: .repository))
+            }
         }
     }
 
     func removeFavoriteRepository(repositoryId: Int) {
         favoriteRepositories.removeAll { $0.id == repositoryId }
-        saveFavorites()
+        Task {
+            try? await repository.removeFavoriteRepository(id: repositoryId)
+            analytics.track(event: .favoriteRemoved(type: .repository))
+        }
     }
 
     func isFavoriteRepository(repositoryId: Int) -> Bool {
@@ -236,87 +256,32 @@ final class FavoritesManager {
     }
 
     func clearAllRepositoryFavorites() {
+        let repoIds = favoriteRepositories.map { $0.id }
         favoriteRepositories.removeAll()
-        saveFavorites()
+        Task {
+            for id in repoIds {
+                try? await repository.removeFavoriteRepository(id: id)
+            }
+        }
     }
 
     // MARK: - Clear All
 
     func clearAllFavorites() {
-        favoriteUsers.removeAll()
-        favoriteRepositories.removeAll()
-        saveFavorites()
+        clearAllUserFavorites()
+        clearAllRepositoryFavorites()
     }
 
     // MARK: - Persistence
 
-    private func saveFavorites() {
+    private func loadFavorites() async {
         do {
-            let encoder = JSONEncoder()
-
-            // Save users
-            let userData = try encoder.encode(favoriteUsers)
-            UserDefaults.standard.set(userData, forKey: userFavoritesKey)
-
-            // Save repositories
-            let repoData = try encoder.encode(favoriteRepositories)
-            UserDefaults.standard.set(repoData, forKey: repoFavoritesKey)
+            favoriteUsers = try await repository.getFavoriteUsers()
+            favoriteRepositories = try await repository.getFavoriteRepositories()
         } catch {
-            print("Failed to save favorites: \(error.localizedDescription)")
-        }
-    }
-
-    private func loadFavorites() {
-        let decoder = JSONDecoder()
-
-        // Load users
-        if let userData = UserDefaults.standard.data(forKey: userFavoritesKey) {
-            do {
-                favoriteUsers = try decoder.decode([FavoriteUser].self, from: userData)
-            } catch {
-                print("Failed to load user favorites: \(error.localizedDescription)")
-                favoriteUsers = []
-            }
-        }
-
-        // Load repositories
-        if let repoData = UserDefaults.standard.data(forKey: repoFavoritesKey) {
-            do {
-                favoriteRepositories = try decoder.decode([FavoriteRepository].self, from: repoData)
-            } catch {
-                print("Failed to load repository favorites: \(error.localizedDescription)")
-                favoriteRepositories = []
-            }
-        }
-    }
-
-    // MARK: - Legacy Support
-
-    // For backward compatibility with old favorites key
-    @discardableResult
-    func migrateLegacyFavorites() -> Bool {
-        let legacyKey = "github_favorites"
-        guard let data = UserDefaults.standard.data(forKey: legacyKey) else {
-            return false
-        }
-
-        do {
-            let decoder = JSONDecoder()
-            let legacyFavorites = try decoder.decode([FavoriteUser].self, from: data)
-
-            // Merge with existing favorites
-            for legacy in legacyFavorites {
-                if !favoriteUsers.contains(where: { $0.id == legacy.id }) {
-                    favoriteUsers.append(legacy)
-                }
-            }
-
-            saveFavorites()
-            UserDefaults.standard.removeObject(forKey: legacyKey)
-            return true
-        } catch {
-            print("Failed to migrate legacy favorites: \(error.localizedDescription)")
-            return false
+            // Silently fail - empty lists will be used
+            favoriteUsers = []
+            favoriteRepositories = []
         }
     }
 }

@@ -6,29 +6,35 @@
 //
 
 import Foundation
+import OSLog
 
 /**
  Single shared api client object and base url handling
  */
 enum GithubAPI {
+    private static let logger = Logger.networking
+
     static let sharedApiClient = ApiClient()
     static var appBaseUrl: URL {
             get {
                 var url = ""
+                var environment = ""
                 #if DEBUG
                 url = ApiUrls.debugUrl
-                    print("DEBUG-------------->>>>>")
+                environment = "DEBUG"
                 #elseif INHOUSE
-                    // TODO change for inhouse level api∫
                 url = ApiUrls.inhouseUrl
-                    print("INHOUSE-------------->>>>>")
+                environment = "INHOUSE"
                 #else
-                    // TODO: change for production level api
                 url = ApiUrls.releaseUrl
-                    print("RELEASE-------------->>>>>")
+                environment = "RELEASE"
                 #endif
+
+                logger.info("Environment: \(environment) - Base URL: \(url, privacy: .public)")
+
                 // Safe URL creation with fallback
                 guard let validURL = URL(string: url) else {
+                    logger.fault("Invalid base URL configured: \(url)")
                     fatalError("Invalid base URL configured: \(url)")
                 }
                 return validURL

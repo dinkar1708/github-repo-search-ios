@@ -32,7 +32,7 @@ extension GithubAPI {
      Runs on background thread, no @MainActor
      */
     static func searchRepoNames(requestObject: SearchRepoRequest) async throws -> SearchItemResponse {
-        var urlRequest = requestObject.buildURLRequest()
+        var urlRequest = try requestObject.buildURLRequest()
         urlRequest.httpBody = requestObject.encodeRequestBody()
         urlRequest.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         let response: ApiClient.Response<SearchItemResponse> = try await sharedApiClient.run(urlRequest)

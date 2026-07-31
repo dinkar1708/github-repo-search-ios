@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import OSLog
 
 /**
  Home view model for data collections and operation using modern Swift concurrency
@@ -15,7 +16,11 @@ import Foundation
 @Observable
 @MainActor
 class HomeViewModel {
-    private let gitHubRepository = DefaultGithubRepository()
+    @ObservationIgnored @Injected(\.githubRepository) private var gitHubRepository
+    @ObservationIgnored @Injected(\.analyticsService) private var analytics
+    @ObservationIgnored @Injected(\.cacheService) private var cache
+
+    private let logger = Logger.viewModel
     private var searchTask: Task<Void, Never>?
 
     var searchText: String = "" {
@@ -79,9 +84,21 @@ class HomeViewModel {
             messageState = .loading
         }
 
-        print("searchInRepoNames() for search query \(searchText) for page \(currentPage)")
+        logger.info("Starting search for query: '\(queryString, privacy: .public)' page: \(self.currentPage)")
 
         do {
+            // Check cache first
+            let cacheKey = "search:\(queryString):page:\(currentPage)"
+            if let cachedResponse: SearchItemResponse = cache.get(key: cacheKey) {
+                logger.debug("Cache hit for search query")
+                searchItems.append(contentsOf: cachedResponse.items)
+                isSearchDataAvailableCurrentPage = cachedResponse.items.count >= HomeConstants.searchPageSize
+                currentPage += 1
+                isSearchingCurrentPage = false
+                messageState = .loaded
+                return
+            }
+
             // get data from api
             let searchResponse = try await gitHubRepository.getSearchResultInRepoName(
                 queryString: queryString,
@@ -92,13 +109,18 @@ class HomeViewModel {
             // Check if task was cancelled or search text changed
             guard !Task.isCancelled else { return }
 
-            print("searchInRepoNames() Total search results count \(searchResponse.totalCount)")
-            print("searchInRepoNames() current page results count \(searchResponse.items.count)")
+            logger.info("Search completed: \(searchResponse.totalCount) total, \(searchResponse.items.count) in page")
+
+            // Track analytics
+            analytics.track(event: .searchPerformed(query: queryString, resultCount: searchResponse.totalCount))
+
+            // TODO: Cache the response for 5 minutes (requires SearchItemResponse to be Encodable)
+            // cache.set(searchResponse, for: cacheKey, ttl: 300)
 
             // special case when user searched some keyword and api is taking long time get data,
             // but user clear the search text from search field, ignore the api result and show empty search result
             if searchText.isEmpty {
-                print("searchInRepoNames() search query is empty ignore result.....")
+                logger.debug("Search query cleared, ignoring results")
                 searchItems.removeAll()
                 messageState = .emptySearchResult
                 return
@@ -114,7 +136,7 @@ class HomeViewModel {
             searchItems.append(contentsOf: searchResponse.items)
             // item count is less than page size, it means no more items in the search text pages
             isSearchDataAvailableCurrentPage = searchResponse.items.count >= HomeConstants.searchPageSize
-            print("searchInRepoNames()  total count so far \(searchItems.count)")
+            logger.debug("Total items loaded so far: \(self.searchItems.count)")
             currentPage += 1
             isSearchingCurrentPage = false
             // change the state
@@ -122,13 +144,13 @@ class HomeViewModel {
 
         } catch let error as ApiResponseError {
             guard !Task.isCancelled else { return }
-            print(error.message)
-            print("searchInRepoNames() error \(error.message)")
-            messageState = .error(error.message)
+            let networkError = NetworkError.from(error)
+            logger.error("Search error: \(networkError.userMessage)")
+            messageState = .error(networkError.userMessage)
             isSearchingCurrentPage = false
         } catch {
             guard !Task.isCancelled else { return }
-            print("searchInRepoNames() error \(error.localizedDescription)")
+            logger.error("Unexpected search error: \(error.localizedDescription)")
             messageState = .error(error.localizedDescription)
             isSearchingCurrentPage = false
         }

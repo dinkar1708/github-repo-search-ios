@@ -35,11 +35,13 @@ extension ApiRequest {
         return [:]
     }
     
-    func buildURLRequest() -> URLRequest {
+    func buildURLRequest() throws -> URLRequest {
 
         let completePath: URL = baseUrl.appendingPathComponent(path)
         guard var components = URLComponents(url: completePath, resolvingAgainstBaseURL: true)
-        else { fatalError("URLComponents can not be created!") }
+        else {
+            throw ApiResponseError(message: "URLComponents cannot be created from URL: \(completePath)")
+        }
        
         if (!urlParameters.isEmpty) {
             components.queryItems = urlParameters.reversed().map { key, value in
@@ -53,7 +55,7 @@ extension ApiRequest {
 
         // Safe URL unwrapping
         guard let finalURL = components.url else {
-            fatalError("Failed to build URL from components: \(components)")
+            throw ApiResponseError(message: "Failed to build URL from components: \(components)")
         }
 
         var request = URLRequest(url: finalURL)

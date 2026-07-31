@@ -7,11 +7,17 @@
 
 import Foundation
 import Observation
+import OSLog
 
 @Observable
 @MainActor
 final class UserProfileViewModel {
-    private let repository: GithubRepository
+    @ObservationIgnored @Injected(\.githubRepository) private var repository
+    @ObservationIgnored @Injected(\.analyticsService) private var analytics
+    @ObservationIgnored @Injected(\.cacheService) private var cache
+
+    private let logger = Logger.viewModel
+
     var userProfile: UserProfile?
     var userRepositories: [UserRepository] = []
     var isLoading = false
@@ -23,9 +29,7 @@ final class UserProfileViewModel {
     private let perPage = 30
     private var hasMoreData = true
 
-    init(repository: GithubRepository = DefaultGithubRepository()) {
-        self.repository = repository
-    }
+    init() { }
 
     var filteredRepositories: [UserRepository] {
         if showForksOnly {
@@ -40,15 +44,48 @@ final class UserProfileViewModel {
         currentPage = 1
         hasMoreData = true
 
-        do {
-            async let profile = repository.getUserProfile(username: username)
-            let repos = try await repository.getUserRepositories(username: username, perPage: perPage, page: currentPage)
+        logger.info("Loading user profile for: \(username, privacy: .public)")
 
-            userProfile = try await profile
+        // Track analytics
+        analytics.track(event: .userProfileViewed(username: username))
+
+        do {
+            // Check cache for profile
+            let profileCacheKey = "profile:\(username)"
+            let reposCacheKey = "repos:\(username):page:1"
+
+            let profile: UserProfile
+            if let cachedProfile: UserProfile = cache.get(key: profileCacheKey) {
+                logger.debug("Cache hit for user profile")
+                profile = cachedProfile
+            } else {
+                profile = try await repository.getUserProfile(username: username)
+                cache.set(profile, for: profileCacheKey, ttl: 900) // 15 min
+            }
+
+            // Check cache for repos
+            let repos: [UserRepository]
+            if let cachedRepos: [UserRepository] = cache.get(key: reposCacheKey) {
+                logger.debug("Cache hit for user repositories")
+                repos = cachedRepos
+            } else {
+                repos = try await repository.getUserRepositories(username: username, perPage: perPage, page: currentPage)
+                // TODO: Cache repos (requires UserRepository to be Encodable)
+                // cache.set(repos, for: reposCacheKey, ttl: 900) // 15 min
+            }
+
+            userProfile = profile
             userRepositories = repos
             hasMoreData = repos.count >= perPage
             currentPage = 2
+
+            logger.info("User profile loaded: \(repos.count) repositories")
+        } catch let error as ApiResponseError {
+            let networkError = NetworkError.from(error)
+            logger.error("Load user profile error: \(networkError.userMessage)")
+            errorMessage = networkError.userMessage
         } catch {
+            logger.error("Unexpected load user profile error: \(error.localizedDescription)")
             errorMessage = error.localizedDescription
         }
 
@@ -80,12 +117,30 @@ final class UserProfileViewModel {
 
         isLoadingMore = true
 
+        logger.info("Loading more repositories, page: \(self.currentPage)")
+
         do {
-            let repos = try await repository.getUserRepositories(username: username, perPage: perPage, page: currentPage)
+            let cacheKey = "repos:\(username):page:\(currentPage)"
+            let repos: [UserRepository]
+
+            if let cached: [UserRepository] = cache.get(key: cacheKey) {
+                logger.debug("Cache hit for repositories page \(self.currentPage)")
+                repos = cached
+            } else {
+                repos = try await repository.getUserRepositories(username: username, perPage: perPage, page: currentPage)
+                // TODO: Cache repos (requires UserRepository to be Encodable)
+                // cache.set(repos, for: cacheKey, ttl: 900) // 15 min
+            }
+
             userRepositories.append(contentsOf: repos)
             hasMoreData = repos.count >= perPage
             currentPage += 1
+        } catch let error as ApiResponseError {
+            let networkError = NetworkError.from(error)
+            logger.error("Load more repositories error: \(networkError.userMessage)")
+            errorMessage = networkError.userMessage
         } catch {
+            logger.error("Unexpected load more error: \(error.localizedDescription)")
             errorMessage = error.localizedDescription
         }
 

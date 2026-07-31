@@ -26,7 +26,7 @@ class ApiClientTests: XCTestCase {
         let request = GithubAPI.SearchRepoRequest(query: "swift in:name&per_page=40&page=1")
 
         // Act
-        let urlRequest = request.buildURLRequest()
+        let urlRequest = try request.buildURLRequest()
 
         // Assert
         XCTAssertNotNil(urlRequest.url, "URL should be built successfully")
@@ -40,7 +40,7 @@ class ApiClientTests: XCTestCase {
         let request = GithubAPI.SearchRepoRequest(query: "swift+mvvm in:name")
 
         // Act
-        let urlRequest = request.buildURLRequest()
+        let urlRequest = try request.buildURLRequest()
 
         // Assert
         XCTAssertNotNil(urlRequest.url, "URL should handle special characters")
@@ -67,7 +67,7 @@ class ApiClientTests: XCTestCase {
         let request = GithubAPI.SearchRepoRequest(query: "swift in:name&per_page=40&page=1")
 
         measure {
-            _ = request.buildURLRequest()
+            _ = try? request.buildURLRequest()
         }
     }
 }

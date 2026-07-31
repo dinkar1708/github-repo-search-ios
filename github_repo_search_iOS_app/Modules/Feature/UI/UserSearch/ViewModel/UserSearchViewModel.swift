@@ -7,11 +7,17 @@
 
 import Foundation
 import Observation
+import OSLog
 
 @Observable
 @MainActor
 final class UserSearchViewModel {
-    private let repository: GithubRepository
+    @ObservationIgnored @Injected(\.githubRepository) private var repository
+    @ObservationIgnored @Injected(\.analyticsService) private var analytics
+    @ObservationIgnored @Injected(\.cacheService) private var cache
+
+    private let logger = Logger.viewModel
+
     var users: [User] = []
     var isLoading = false
     var errorMessage: String?
@@ -21,9 +27,7 @@ final class UserSearchViewModel {
 
     private var searchTask: Task<Void, Never>?
 
-    init(repository: GithubRepository = DefaultGithubRepository()) {
-        self.repository = repository
-    }
+    init() { }
 
     func searchUsers() {
         searchTask?.cancel()
@@ -49,7 +53,19 @@ final class UserSearchViewModel {
             errorMessage = nil
             currentPage = 1
 
+            logger.info("Searching users for query: '\(self.searchText, privacy: .public)'")
+
             do {
+                // Check cache first
+                let cacheKey = "users:\(searchText):page:\(currentPage)"
+                if let cached: SearchUser = cache.get(key: cacheKey) {
+                    logger.debug("Cache hit for user search")
+                    users = cached.items
+                    hasMorePages = cached.items.count == 30
+                    isLoading = false
+                    return
+                }
+
                 let response = try await repository.searchUsers(
                     query: searchText,
                     perPage: 30,
@@ -62,8 +78,26 @@ final class UserSearchViewModel {
                     return
                 }
 
+                // Cache the response
+                cache.set(response, for: cacheKey, ttl: 300)
+
+                // Track analytics
+                analytics.track(event: .searchPerformed(query: searchText, resultCount: response.totalCount))
+
                 users = response.items
                 hasMorePages = response.items.count == 30
+                isLoading = false
+
+                logger.info("User search completed: \(response.items.count) users found")
+            } catch let error as ApiResponseError {
+                guard !Task.isCancelled else {
+                    isLoading = false
+                    return
+                }
+                let networkError = NetworkError.from(error)
+                logger.error("User search error: \(networkError.userMessage)")
+                errorMessage = networkError.userMessage
+                users = []
                 isLoading = false
             } catch {
                 // Only show error if task wasn't cancelled
@@ -71,6 +105,7 @@ final class UserSearchViewModel {
                     isLoading = false
                     return
                 }
+                logger.error("Unexpected user search error: \(error.localizedDescription)")
                 errorMessage = error.localizedDescription
                 users = []
                 isLoading = false
@@ -85,15 +120,34 @@ final class UserSearchViewModel {
             isLoading = true
             currentPage += 1
 
+            logger.info("Loading more users, page: \(self.currentPage)")
+
             do {
+                let cacheKey = "users:\(searchText):page:\(currentPage)"
+                if let cached: SearchUser = cache.get(key: cacheKey) {
+                    users.append(contentsOf: cached.items)
+                    hasMorePages = cached.items.count == 30
+                    isLoading = false
+                    return
+                }
+
                 let response = try await repository.searchUsers(
                     query: searchText,
                     perPage: 30,
                     page: currentPage
                 )
+
+                cache.set(response, for: cacheKey, ttl: 300)
+
                 users.append(contentsOf: response.items)
                 hasMorePages = response.items.count == 30
+            } catch let error as ApiResponseError {
+                let networkError = NetworkError.from(error)
+                logger.error("Load more error: \(networkError.userMessage)")
+                errorMessage = networkError.userMessage
+                currentPage -= 1
             } catch {
+                logger.error("Unexpected load more error: \(error.localizedDescription)")
                 errorMessage = error.localizedDescription
                 currentPage -= 1
             }
