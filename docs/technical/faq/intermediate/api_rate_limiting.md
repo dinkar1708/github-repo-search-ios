@@ -536,9 +536,9 @@ logger.debug("Cache size: \(cache.currentSize)")
 
 ### Internal Documentation
 
-- [Caching Strategy](CACHING.md)
-- [API Integration](../product/API_INTEGRATION.md)
-- [Error Handling](ERROR_HANDLING.md)
+- [Caching Strategy](../beginner/caching.md)
+- [API Integration](../../../product/api_integration.md)
+- [Error Handling](../beginner/error_handling.md)
 
 ## Summary
 

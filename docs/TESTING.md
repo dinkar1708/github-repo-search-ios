@@ -26,7 +26,7 @@ Testing strategy and coverage for GitHub Repository Search iOS app.
 | UI            | XCTest (XCUI)      | Real user flows on screen          | 3 tests      |
 | Performance   | XCTest (Metrics)   | Speed and memory over time         | 1 test       |
 
-**See [TEST_ORGANIZATION.md](TEST_ORGANIZATION.md) for detailed folder structure recommendations.**
+**See [testing/readme.md](testing/readme.md) for detailed folder structure and test organization.**
 
 ---
 

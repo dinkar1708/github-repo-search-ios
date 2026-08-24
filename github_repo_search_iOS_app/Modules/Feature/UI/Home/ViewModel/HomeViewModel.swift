@@ -16,6 +16,9 @@ import OSLog
 @Observable
 @MainActor
 class HomeViewModel {
+    // TODO: Refactor to modern iOS 17+ Constructor Injection:
+    // Replace `@ObservationIgnored @Injected` with `private let` constructor properties initialized with defaults
+    // to eliminate boilerplate and avoid mutating global static container in unit tests.
     @ObservationIgnored @Injected(\.githubRepository) private var gitHubRepository
     @ObservationIgnored @Injected(\.analyticsService) private var analytics
     @ObservationIgnored @Injected(\.cacheService) private var cache

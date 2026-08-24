@@ -585,10 +585,14 @@ DependencyContainer.shared = .test(
 ## Architecture Decision Records
 
 See individual documentation files for detailed decisions:
-- [ARCHITECTURE_PATTERNS.md](ARCHITECTURE_PATTERNS.md)
-- [DEPENDENCY_INJECTION.md](DEPENDENCY_INJECTION.md)
-- [CACHING.md](CACHING.md)
-- [ERROR_HANDLING.md](ERROR_HANDLING.md)
+- [architecture_patterns.md](architecture_patterns.md)
+- [faq/intermediate/dependency_injection.md](faq/intermediate/dependency_injection.md)
+- [faq/beginner/caching.md](faq/beginner/caching.md)
+- [faq/beginner/error_handling.md](faq/beginner/error_handling.md)
+
+### 📋 Modern Observation Standard & Refactoring Roadmap
+- **Standard:** Modern iOS 17+ Observation framework (`@Observable`) is the universal standard for all ViewModels. Normal `var` properties drive UI updates with surgical diffing.
+- **TODO:** Audit educational sample views in `Modules/Feature/UI/Samples/` to replace legacy `ObservableObject` and `@Published` with `@Observable`. Follow [Apple Developer: Migrating from ObservableObject to @Observable](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro).
 
 ## Summary
 

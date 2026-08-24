@@ -82,6 +82,6 @@ xcodebuild clean
 No external dependencies required. Project is 100% native iOS.
 
 ## Next Steps
-- Read [Architecture](../ARCHITECTURE.md) for system design
-- See [Features](../FEATURES.md) for complete feature list
-- Check [Testing Guide](../TESTING.md) for test information
+- Read [Architecture](../architecture.md) for system design
+- See [Features](../features.md) for complete feature list
+- Check [Testing Guide](../testing.md) for test information

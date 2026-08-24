@@ -1,69 +1,13 @@
-## Description
-<!-- Provide a brief description of the changes in this PR -->
+### Description
+<!-- What does this PR do and why? -->
 
-## Type of Change
-<!-- Mark the relevant option with an "x" -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Refactoring (no functional changes, code improvements)
-- [ ] Documentation update
-- [ ] UI/UX improvements
-- [ ] Performance improvements
-- [ ] Test coverage improvements
+### Changes
+- 
 
-## Related Issues
-<!-- Link to related issues using #issue_number -->
+### Related Issue
 Closes #
 
-## Changes Made
-<!-- List the specific changes made in this PR -->
--
--
--
-
-## Screenshots (if applicable)
-<!-- Add screenshots for UI changes -->
-
-## Testing
-<!-- Describe the testing you've done -->
-- [ ] Unit tests added/updated
-- [ ] Integration tests added/updated
-- [ ] UI tests added/updated
-- [ ] Manual testing completed
-- [ ] All tests passing locally
-
-## Code Quality
-- [ ] SwiftLint passes with no warnings
-- [ ] No force unwrapping added
-- [ ] Proper error handling implemented
-- [ ] Code follows MVVM architecture
-- [ ] Added OSLog logging where appropriate
-- [ ] Accessibility labels added for UI changes
-- [ ] Privacy considerations addressed
-
-## Documentation
-- [ ] Updated relevant docs in `docs/` folder if needed
-- [ ] Technical docs updated (Architecture, DI, Logging, etc.)
-- [ ] Testing docs updated if tests added
-- [ ] API documentation updated if endpoints changed
-- [ ] README.md updated if features added
-- [ ] Code comments added for complex logic
-
-## Deployment Checklist
-- [ ] Build succeeds without errors
-- [ ] Code coverage maintained or improved
-- [ ] No breaking changes to existing APIs
-- [ ] Migration guide provided (if breaking changes)
-
-## Reviewer Notes
-<!-- Any specific areas you'd like reviewers to focus on? -->
-
-## Post-Merge Tasks
-<!-- List any tasks that need to be done after merging -->
-- [ ] Update release notes
-- [ ] Update documentation
-- [ ] Monitor analytics/crash reports
-
----
-Generated with Claude Code
+### Checklist
+- [ ] Builds and tests pass locally
+- [ ] Code follows project style (SwiftLint, no force-unwraps)
+- [ ] Screenshots/demo included (if UI changed)
