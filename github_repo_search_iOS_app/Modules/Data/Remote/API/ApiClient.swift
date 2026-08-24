@@ -13,6 +13,10 @@ import OSLog
 /**
  Reusable api client for api call using modern Swift concurrency
  No @MainActor, Sendable conformance, HTTP status validation
+ 
+ TODO: When introducing OAuth token refreshing (401 handling) or request deduplication,
+ keep `ApiClient` as a stateless `Sendable struct` for parallel concurrency, and delegate
+ mutable state/locks to a dedicated `actor AuthTokenManager` to prevent token refresh race conditions.
  */
 struct ApiClient: Sendable {
     struct Response<T>: Sendable where T: Sendable {

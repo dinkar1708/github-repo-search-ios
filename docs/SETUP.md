@@ -235,10 +235,9 @@ For authenticated requests:
 
 ## Next Steps
 
-1. Review [ARCHITECTURE.md](ARCHITECTURE.md) for project structure
-2. Check [TESTING.md](TESTING.md) for testing guidelines
-3. See [FEATURES.md](FEATURES.md) for feature documentation
-4. Read [CHANGELOG.md](CHANGELOG.md) for recent changes
+1. Review [architecture.md](architecture.md) for project structure
+2. Check [testing.md](testing.md) for testing guidelines
+3. See [features.md](features.md) for feature documentation
 
 ## Support
 

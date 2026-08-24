@@ -14,7 +14,7 @@ Comprehensive testing strategy for GitHub Repository Search iOS app.
 ### Unit Tests
 Tests for individual components in isolation.
 
-**See:** [UNIT_TESTS.md](UNIT_TESTS.md)
+**See:** [unit_tests.md](unit_tests.md)
 
 - 4 unit tests
 - API client testing
@@ -24,7 +24,7 @@ Tests for individual components in isolation.
 ### UI Tests
 Tests for user interface and interactions.
 
-**See:** [UI_TESTS.md](UI_TESTS.md)
+**See:** [ui_tests.md](ui_tests.md)
 
 - 3 UI interaction tests
 - Screen navigation
@@ -33,7 +33,7 @@ Tests for user interface and interactions.
 ### Integration Tests
 Tests for multiple components working together.
 
-**See:** [INTEGRATION_TESTS.md](INTEGRATION_TESTS.md)
+**See:** [integration_tests.md](integration_tests.md)
 
 - Status: Not yet implemented
 - Recommended tests listed
@@ -41,7 +41,7 @@ Tests for multiple components working together.
 ### Performance Tests
 Tests for app performance metrics.
 
-**See:** [PERFORMANCE_TESTS.md](PERFORMANCE_TESTS.md)
+**See:** [performance_tests.md](performance_tests.md)
 
 - 1 launch performance test
 - Baseline measurements
@@ -51,8 +51,8 @@ Tests for app performance metrics.
 Tests for app behavior under extreme conditions.
 
 **See:**
-- [STRESS_TESTING.md](STRESS_TESTING.md) - Comprehensive stress testing guide
-- [STRESS_TESTS_SETUP.md](STRESS_TESTS_SETUP.md) - Quick setup and running instructions
+- [stress_testing.md](stress_testing.md) - Comprehensive stress testing guide
+- [stress_tests_setup.md](stress_tests_setup.md) - Quick setup and running instructions
 
 **Tests:**
 - Heavy scrolling (60s continuous)
@@ -83,15 +83,14 @@ xcodebuild test -scheme github_repo_search_iOS_app \
 ```
 docs/testing/
 ├── README.md                    # This file - testing overview
-├── UNIT_TESTS.md               # Unit test documentation
-├── UI_TESTS.md                 # UI test documentation
-├── INTEGRATION_TESTS.md        # Integration test documentation
-├── PERFORMANCE_TESTS.md        # Performance test documentation
-├── STRESS_TESTING.md           # Stress testing guide (comprehensive)
-├── STRESS_TESTS_SETUP.md       # Quick setup and running stress tests
-├── MONITORING_TEST_METRICS.md  # How to monitor tests (memory, CPU, metrics)
-├── CODE_COVERAGE.md            # Coverage guide and best practices
-└── TESTING_GUIDE.md            # General testing guide
+├── unit_tests.md               # Unit test documentation
+├── ui_tests.md                 # UI test documentation
+├── integration_tests.md        # Integration test documentation
+├── performance_tests.md        # Performance test documentation
+├── stress_testing.md           # Stress testing guide (comprehensive)
+├── stress_tests_setup.md       # Quick setup and running stress tests
+├── monitoring_test_metrics.md  # How to monitor tests (memory, CPU, metrics)
+└── code_coverage.md            # Coverage guide and best practices
 ```
 
 ## Coverage Goals
@@ -116,9 +115,9 @@ Tests/
 
 ## Next Steps
 
-1. Read [TESTING_GUIDE.md](TESTING_GUIDE.md) for general testing practices
+1. Read the testing overview for general testing practices
 2. Review specific test type documentation
-3. Check [CODE_COVERAGE.md](CODE_COVERAGE.md) for coverage best practices
+3. Check [code_coverage.md](code_coverage.md) for coverage best practices
 4. Write new tests following the patterns
 
 ## Resources

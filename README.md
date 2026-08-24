@@ -6,7 +6,7 @@ Modern iOS app for searching GitHub repositories and users. Built with SwiftUI, 
 
 - **Platform**: iOS 17.0+
 - **Language**: Swift 5.9+
-- **UI**: SwiftUI with @Observable
+- **UI**: SwiftUIr with @Observable
 - **Architecture**: MVVM + Repository pattern
 - **Build Status**: BUILD SUCCEEDED
 - **No External Dependencies**: 100% native iOS
@@ -20,44 +20,51 @@ Modern iOS app for searching GitHub repositories and users. Built with SwiftUI, 
 - Multi-language (English, Japanese)
 - Offline capability with caching
 
+### 🚀 Modern iOS 17+ Architecture Standard:
+- **Zero `@Published` Overhead:** All production ViewModels use Apple's modern `@Observable` macro from the Observation framework. Standard stored `var` properties automatically drive surgical UI updates without Combine or `@Published`.
+- **`@State` for ViewModels:** ViewModels are declared in views via `@State private var viewModel = ...`, ensuring single-instance lifecycle management.
+- **📋 TODO:** Migrate any remaining sample/educational demo views in `Modules/Feature/UI/Samples/` to the modern `@Observable` standard without `@Published`. Follow [Apple's Official Migration Guide: ObservableObject to @Observable](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro).
+
 ## Documentation
 
-Comprehensive documentation organized by category. [View all documentation](docs/README.md)
+Comprehensive documentation organized by category. [View all documentation](docs/readme.md)
 
 ### Getting Started
-- [Quick Start Guide](docs/getting-started/QUICKSTART.md) - Setup and run in 5 minutes
-- [Setup Guide](docs/SETUP.md) - Development environment configuration
+- [Quick Start Guide](docs/getting-started/quickstart.md) - Setup and run in 5 minutes
+- [Setup Guide](docs/setup.md) - Development environment configuration
 
 ### Technical Documentation
-- [Architecture Overview](docs/technical/ARCHITECTURE_OVERVIEW.md) - High-level architecture with diagrams
-- [Architecture Patterns](docs/technical/ARCHITECTURE_PATTERNS.md) - MVVM, DI, Repository pattern
-- [Dependency Injection](docs/technical/DEPENDENCY_INJECTION.md) - Property wrapper-based DI
-- [Keychain Storage](docs/technical/KEYCHAIN_STORAGE.md) - AES-256 secure storage
-- [Logging System](docs/technical/LOGGING.md) - OSLog with type-safe categories
-- [Caching Strategy](docs/technical/CACHING.md) - NSCache with TTL
-- [Analytics](docs/technical/ANALYTICS.md) - Event tracking system
-- [Error Handling](docs/technical/ERROR_HANDLING.md) - Typed NetworkError
-- [API Rate Limiting](docs/technical/API_RATE_LIMITING.md) - GitHub API rate limit handling
-- [Security](docs/technical/SECURITY.md) - Security best practices and implementation
-- [Code Style](docs/technical/CODE_STYLE.md) - SwiftLint configuration
+- [Architecture Overview](docs/technical/architecture_overview.md) - High-level architecture with diagrams
+- [Architecture Patterns](docs/technical/architecture_patterns.md) - MVVM, DI, Repository pattern
+- [iOS 17 Observation Migration Guide](docs/technical/faq/intermediate/ios17_observation_migration_guide.md) - Complete `@Observable` migration guide & patterns
+- [Security](docs/technical/security.md) - Security best practices and implementation
+- [Code Style](docs/technical/code_style.md) - SwiftLint configuration
+- [Analytics](docs/technical/analytics.md) - Event tracking system
+- [Logging System](docs/technical/logging.md) - OSLog with type-safe categories
+
+### Technical FAQ
+- [FAQ Overview](docs/technical/faq/readme.md) - Technical training materials organized by difficulty
+- [Beginner Topics](docs/technical/faq/beginner/) - Fundamentals (optionals, lifecycle, storage, caching)
+- [Intermediate Topics](docs/technical/faq/intermediate/) - Advanced patterns (async/await, DI, API rate limiting)
+- [Advanced Topics](docs/technical/faq/advanced/) - Performance and memory optimization
 
 ### Testing Documentation
-- [Testing Overview](docs/testing/README.md) - Testing strategy (8 tests, 51.87% coverage)
-- [Unit Tests](docs/testing/UNIT_TESTS.md) - Component testing guide
-- [UI Tests](docs/testing/UI_TESTS.md) - XCUITest guide
-- [Integration Tests](docs/testing/INTEGRATION_TESTS.md) - Multi-component testing
-- [Performance Tests](docs/testing/PERFORMANCE_TESTS.md) - Metrics and benchmarks
-- [Code Coverage](docs/testing/CODE_COVERAGE.md) - Coverage best practices
+- [Testing Overview](docs/testing/readme.md) - Testing strategy (8 tests, 51.87% coverage)
+- [Unit Tests](docs/testing/unit_tests.md) - Component testing guide
+- [UI Tests](docs/testing/ui_tests.md) - XCUITest guide
+- [Integration Tests](docs/testing/integration_tests.md) - Multi-component testing
+- [Performance Tests](docs/testing/performance_tests.md) - Metrics and benchmarks
+- [Code Coverage](docs/testing/code_coverage.md) - Coverage best practices
 
 ### Product Documentation
-- [Features](docs/FEATURES.md) - Complete feature list
-- [User Flows](docs/product/USER_FLOWS.md) - User interaction patterns
-- [UI/UX Design](docs/product/UI_UX_DESIGN.md) - Apple HIG compliance
-- [API Integration](docs/product/API_INTEGRATION.md) - GitHub REST API v3
+- [Features](docs/features.md) - Complete feature list
+- [User Flows](docs/product/user_flows.md) - User interaction patterns
+- [UI/UX Design](docs/product/ui_ux_design.md) - Apple HIG compliance
+- [API Integration](docs/product/api_integration.md) - GitHub REST API v3
 
 ### References
 - [Best Practices](docs/references.md) - iOS development resources
-- [All Documentation Index](docs/README.md) - Complete documentation hub
+- [All Documentation Index](docs/readme.md) - Complete documentation hub
 
 ### Cross-Platform Specifications
 This iOS app follows master specifications from the Android version:
@@ -191,7 +198,7 @@ From Xcode, click **Product → Test** (or press `⌘U`) - it will run all test 
 
 ## 📖 Complete Testing Documentation
 
-**[docs/TESTING.md](docs/TESTING.md)** - Complete testing guide including:
+**[docs/testing.md](docs/testing.md)** - Complete testing guide including:
 - All test cases with detailed explanations
 - Code coverage measurement and setup
 - How to run tests (Xcode, command line, CI/CD)
@@ -215,7 +222,7 @@ From Xcode, click **Product → Test** (or press `⌘U`) - it will run all test 
 - Yellow = moderate (40-80%)
 - Red = needs tests (<40%)
 
-For detailed coverage documentation, command line usage, and best practices, see **[docs/TESTING.md](docs/TESTING.md)**
+For detailed coverage documentation, command line usage, and best practices, see **[docs/testing.md](docs/testing.md)**
 
 ## Requirements
 
@@ -238,7 +245,7 @@ For detailed coverage documentation, command line usage, and best practices, see
 - `deploy-appstore.yml` - Deploy to App Store (requires `[release]` in commit message)
 - `deploy-shared.yml` - Reusable deployment workflow
 
-See [docs/SETUP.md](docs/SETUP.md) for GitHub Actions secrets configuration.
+See [docs/setup.md](docs/setup.md) for GitHub Actions secrets configuration.
 
 ## Technology Stack
 

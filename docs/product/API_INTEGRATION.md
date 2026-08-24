@@ -210,6 +210,12 @@ Consider GraphQL for complex queries with fewer requests.
 ### Offline Support
 Store API responses locally for offline access.
 
+### 📋 TODO: Auth Interceptor & Token Refresh Mutex Architecture
+When adding authenticated GitHub OAuth / Bearer Token support with token refreshing (handling `401 Unauthorized`):
+- **Design Rule:** Keep `struct ApiClient: Sendable` stateless for maximum parallel network concurrency.
+- **Actor Delegation:** Delegate mutable shared state (token refresh locks, auth interceptors, and request deduplication) to a dedicated `actor AuthTokenManager`.
+- **Thundering Herd Guard:** The `AuthTokenManager` actor must coalesce concurrent 401 retries into a single synchronized `Task<String, Error>`, preventing multiple simultaneous refresh token API calls.
+
 ## File References
 
 - API Client: `Modules/Data/Remote/API/ApiClient.swift`

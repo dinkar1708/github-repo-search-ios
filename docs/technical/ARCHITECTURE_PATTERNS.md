@@ -85,10 +85,10 @@ class HomeViewModel {
 ```
 
 ### Model
-Data structures:
+Data structures representing API entities and domain models:
 
 ```swift
-struct SearchItem: Decodable, Identifiable, Sendable {
+struct SearchItem: Decodable, Hashable, Identifiable, Sendable {
     let id: Int
     let name: String
     let fullName: String
@@ -98,6 +98,17 @@ struct SearchItem: Decodable, Identifiable, Sendable {
     let forksCount: Int
 }
 ```
+
+#### 📦 Model Protocol Conformance Guide:
+
+| Protocol | Purpose & Data Direction | Why Used in This App |
+| :--- | :--- | :--- |
+| **`Decodable`** | **JSON ➔ Swift Struct**<br>Decodes raw API response bytes into strongly-typed properties. | We use `Decodable` (instead of full `Codable`) because search results are **read-only** from GitHub API. Conforming only to what is needed reduces compiled binary size. |
+| **`Encodable`** | **Swift Struct ➔ JSON**<br>Serializes Swift data into raw JSON for POST/PUT request bodies. | Used when sending request payloads (e.g. creating bookmarks, user preferences). |
+| **`Codable`** | **Both Ways**<br>Typealias for `Decodable & Encodable`. | Used when a model needs both upload and download serialization. |
+| **`Identifiable`** | **SwiftUI List & Diffing**<br>Requires unique `var id: Int / String`. | Powers smooth SwiftUI `List` and `ForEach` row animations without requiring manual `id: \.id` keypaths. |
+| **`Hashable`** | **Navigation & Set Collections**<br>Enables hashing and equality (`==`). | Allows models to be used as `NavigationStack(value:)` destinations (`.navigationDestination(for: SearchItem.self)`) and in `Set<SearchItem>` for $O(1)$ fast lookup. |
+| **`Sendable`** | **Swift 6 Concurrency & Thread Safety**<br>Guarantees safe thread boundary crossing. | Allows models to be safely passed from background `URLSession` / `Task.detached` threads to `@MainActor` ViewModels without data races. |
 
 ## Repository Pattern
 
