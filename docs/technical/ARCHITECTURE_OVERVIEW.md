@@ -586,7 +586,9 @@ DependencyContainer.shared = .test(
 
 See individual documentation files for detailed decisions:
 - [architecture_patterns.md](architecture_patterns.md)
+- [faq/intermediate/swiftdata_offline_storage_sync_architecture.md](faq/intermediate/swiftdata_offline_storage_sync_architecture.md)
 - [faq/intermediate/dependency_injection.md](faq/intermediate/dependency_injection.md)
+- [faq/beginner/ios_data_storage_options.md](faq/beginner/ios_data_storage_options.md)
 - [faq/beginner/caching.md](faq/beginner/caching.md)
 - [faq/beginner/error_handling.md](faq/beginner/error_handling.md)
 

@@ -82,15 +82,39 @@ Essential concepts every iOS developer must know:
     - Technical interview knowledge check and golden rules
     - *Sample:* `LifecycleMethodsOverviewView.swift`
 
+11. **[iOS Data Storage Options & Implementation Guide](./beginner/ios_data_storage_options.md)** ✨ NEW
+    - Comparison matrix & implementation TODOs for UserDefaults, Keychain, FileManager, SQLite
+    - Deep-dive dual-stack roadmap for **both Core Data AND SwiftData** (`@Model`, `NSPersistentContainer`, `@ModelActor`)
+
 ### Intermediate Topics
 
-1. **[Async/Await & Structured Concurrency](./intermediate/async_await_concurrency.md)** ✨ NEW
+1. **[Async/Await & Structured Concurrency](./intermediate/async_await_concurrency.md)**
    - Modern Swift concurrency with async/await
    - Task and TaskGroup for parallel execution
    - MainActor for UI thread safety
-   - Replacing completion handlers
-   - Error handling and cancellation
-   - *Essential for: API calls, modern iOS apps*
+   - *Sample:* `AsyncAwaitView.swift`
+
+2. **[iOS Location Services Complete Guide](./intermediate/location_services_guide.md)** ✨ NEW
+   - One-time fix (`requestLocation()`), Continuous Foreground & Background GPS
+   - `allowsBackgroundLocationUpdates`, Significant Location Changes, Geofencing (`CLCircularRegion`)
+   - *Sample:* `LocationTrackingSampleView.swift`
+
+3. **[Bluetooth (BLE) & iBeacon Engineering Guide](./intermediate/bluetooth_ble_beacon_guide.md)** ✨ NEW
+   - CoreBluetooth `CBCentralManager` peripheral scanning, advertising data, RSSI distance calculations
+   - CoreLocation iBeacon monitoring & ranging (`CLBeaconIdentityConstraint`)
+   - *Sample:* `BluetoothBeaconSampleView.swift`
+
+4. **[Mobile SDK Telemetry Data Pipeline](./intermediate/mobile_sdk_data_pipeline.md)** ✨ NEW
+   - Edge telemetry collection, offline disk spool buffer, adaptive batching
+   - Cloud DWH ingestion simulation (AWS S3/Kinesis/Snowflake) and battery-aware sampling
+   - *Sample:* `LocationSDKPipelineOverviewView.swift`
+
+5. **[SwiftData Offline Storage & Cloud Sync Architecture](./intermediate/swiftdata_offline_storage_sync_architecture.md)** ✨ NEW
+   - Clean 3-Tier Layering (Presentation -> Repository -> Data Layer Stack)
+   - 4-Table Normalized Relational Schema (`OfflineRepoItem`, `OfflineRepoOwner`, `OfflineRepoTag`, `OfflineSyncAuditLog`)
+   - Swift 6 Concurrency Isolation: `@MainActor` UI Queries + `@ModelActor` Background Ingestion
+   - Zero `@Published` Observation & Two-Way Mock REST API Sync (`POST /api/v1/sync`)
+   - *Sample:* `SwiftDataOfflineStorageView.swift`
 
 Coming soon:
 - Combine Framework Basics
@@ -358,7 +382,7 @@ For questions or suggestions:
 
 **Status**: Verified & Active
 **Last Updated**: 2026-08-25
-**Topics Completed**: 11/15 (Beginner: 10, Intermediate: 1, Advanced: 2)
+**Topics Completed**: 15/17 (Beginner: 11, Intermediate: 4, Advanced: 2)
 
 ---
 

@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B1C2D3E40001000100000002 /* LocationManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40001000100000001 /* LocationManagerService.swift */; };
+		B1C2D3E40001000100000004 /* BluetoothBeaconService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40001000100000003 /* BluetoothBeaconService.swift */; };
+		B1C2D3E40001000100000006 /* LocationDataPipelineQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40001000100000005 /* LocationDataPipelineQueue.swift */; };
+		B1C2D3E40001000100000008 /* LocationTrackingSampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40001000100000007 /* LocationTrackingSampleView.swift */; };
+		B1C2D3E4000100010000000A /* BluetoothBeaconSampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40001000100000009 /* BluetoothBeaconSampleView.swift */; };
+		B1C2D3E4000100010000000C /* LocationSDKPipelineOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4000100010000000B /* LocationSDKPipelineOverviewView.swift */; };
+		C1D2E3F40001000100000002 /* OfflineRepoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F40001000100000001 /* OfflineRepoItem.swift */; };
+		C1D2E3F40001000100000004 /* OfflineRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F40001000100000003 /* OfflineRepository.swift */; };
+		C1D2E3F40001000100000006 /* SwiftDataOfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F40001000100000005 /* SwiftDataOfflineViewModel.swift */; };
+		C1D2E3F40001000100000008 /* SwiftDataOfflineStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F40001000100000007 /* SwiftDataOfflineStorageView.swift */; };
+		C1D2E3F4000100010000000A /* SwiftDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F40001000100000009 /* SwiftDataStack.swift */; };
+		C1D2E3F4000100010000000C /* OfflineBackgroundSyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F4000100010000000B /* OfflineBackgroundSyncScheduler.swift */; };
 		A1B2C3D40001000100000002 /* AppLifecycleExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40001000100000001 /* AppLifecycleExampleView.swift */; };
 		A1B2C3D40001000100000004 /* SceneLifecycleExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40001000100000003 /* SceneLifecycleExampleView.swift */; };
 		A1B2C3D40001000100000006 /* SwiftUIViewLifecycleExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40001000100000005 /* SwiftUIViewLifecycleExampleView.swift */; };
@@ -172,6 +184,18 @@
 		A1B2C3D40001000100000007 /* ViewControllerLifecycleExampleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewControllerLifecycleExampleView.swift; path = Samples/Beginner/ViewControllerLifecycleExampleView.swift; sourceTree = "<group>"; };
 		A1B2C3D40001000100000009 /* NavigationLifecycleExampleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationLifecycleExampleView.swift; path = Samples/Beginner/NavigationLifecycleExampleView.swift; sourceTree = "<group>"; };
 		A1B2C3D4000100010000000B /* LifecycleMethodsOverviewView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LifecycleMethodsOverviewView.swift; path = Samples/Beginner/LifecycleMethodsOverviewView.swift; sourceTree = "<group>"; };
+		B1C2D3E40001000100000001 /* LocationManagerService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocationManagerService.swift; path = Samples/Intermediate/LocationManagerService.swift; sourceTree = "<group>"; };
+		B1C2D3E40001000100000003 /* BluetoothBeaconService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BluetoothBeaconService.swift; path = Samples/Intermediate/BluetoothBeaconService.swift; sourceTree = "<group>"; };
+		B1C2D3E40001000100000005 /* LocationDataPipelineQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocationDataPipelineQueue.swift; path = Samples/Intermediate/LocationDataPipelineQueue.swift; sourceTree = "<group>"; };
+		B1C2D3E40001000100000007 /* LocationTrackingSampleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocationTrackingSampleView.swift; path = Samples/Intermediate/LocationTrackingSampleView.swift; sourceTree = "<group>"; };
+		B1C2D3E40001000100000009 /* BluetoothBeaconSampleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BluetoothBeaconSampleView.swift; path = Samples/Intermediate/BluetoothBeaconSampleView.swift; sourceTree = "<group>"; };
+		B1C2D3E4000100010000000B /* LocationSDKPipelineOverviewView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocationSDKPipelineOverviewView.swift; path = Samples/Intermediate/LocationSDKPipelineOverviewView.swift; sourceTree = "<group>"; };
+		C1D2E3F40001000100000001 /* OfflineRepoItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OfflineRepoItem.swift; path = Samples/Intermediate/Offline/OfflineRepoItem.swift; sourceTree = "<group>"; };
+		C1D2E3F40001000100000003 /* OfflineRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OfflineRepository.swift; path = Samples/Intermediate/Offline/OfflineRepository.swift; sourceTree = "<group>"; };
+		C1D2E3F40001000100000005 /* SwiftDataOfflineViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataOfflineViewModel.swift; path = Samples/Intermediate/Offline/SwiftDataOfflineViewModel.swift; sourceTree = "<group>"; };
+		C1D2E3F40001000100000007 /* SwiftDataOfflineStorageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataOfflineStorageView.swift; path = Samples/Intermediate/Offline/SwiftDataOfflineStorageView.swift; sourceTree = "<group>"; };
+		C1D2E3F40001000100000009 /* SwiftDataStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataStack.swift; path = Samples/Intermediate/Offline/SwiftDataStack.swift; sourceTree = "<group>"; };
+		C1D2E3F4000100010000000B /* OfflineBackgroundSyncScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OfflineBackgroundSyncScheduler.swift; path = Samples/Intermediate/Offline/OfflineBackgroundSyncScheduler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,9 +309,37 @@
 			children = (
 				596A6FC5C0F2E5CFADD652AF /* Advanced */,
 				7C02999CBA254275851FD774 /* Beginner */,
+				B1C2D3E40001000100000000 /* Intermediate */,
 				E226FCF55ECEFC169C31D8FB /* SamplesHelperViews.swift */,
 			);
 			name = Samples;
+			sourceTree = "<group>";
+		};
+		B1C2D3E40001000100000000 /* Intermediate */ = {
+			isa = PBXGroup;
+			children = (
+				B1C2D3E40001000100000001 /* LocationManagerService.swift */,
+				B1C2D3E40001000100000003 /* BluetoothBeaconService.swift */,
+				B1C2D3E40001000100000005 /* LocationDataPipelineQueue.swift */,
+				B1C2D3E40001000100000007 /* LocationTrackingSampleView.swift */,
+				B1C2D3E40001000100000009 /* BluetoothBeaconSampleView.swift */,
+				B1C2D3E4000100010000000B /* LocationSDKPipelineOverviewView.swift */,
+				C1D2E3F40001000100000000 /* Offline */,
+			);
+			name = Intermediate;
+			sourceTree = "<group>";
+		};
+		C1D2E3F40001000100000000 /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				C1D2E3F40001000100000001 /* OfflineRepoItem.swift */,
+				C1D2E3F40001000100000003 /* OfflineRepository.swift */,
+				C1D2E3F40001000100000005 /* SwiftDataOfflineViewModel.swift */,
+				C1D2E3F40001000100000007 /* SwiftDataOfflineStorageView.swift */,
+				C1D2E3F40001000100000009 /* SwiftDataStack.swift */,
+				C1D2E3F4000100010000000B /* OfflineBackgroundSyncScheduler.swift */,
+			);
+			name = Offline;
 			sourceTree = "<group>";
 		};
 		4BC1647E4B7151D2B2423B4C /* Storage */ = {
@@ -995,6 +1047,18 @@
 				A1B2C3D40001000100000008 /* ViewControllerLifecycleExampleView.swift in Sources */,
 				A1B2C3D4000100010000000A /* NavigationLifecycleExampleView.swift in Sources */,
 				A1B2C3D4000100010000000C /* LifecycleMethodsOverviewView.swift in Sources */,
+				B1C2D3E40001000100000002 /* LocationManagerService.swift in Sources */,
+				B1C2D3E40001000100000004 /* BluetoothBeaconService.swift in Sources */,
+				B1C2D3E40001000100000006 /* LocationDataPipelineQueue.swift in Sources */,
+				B1C2D3E40001000100000008 /* LocationTrackingSampleView.swift in Sources */,
+				B1C2D3E4000100010000000A /* BluetoothBeaconSampleView.swift in Sources */,
+				B1C2D3E4000100010000000C /* LocationSDKPipelineOverviewView.swift in Sources */,
+				C1D2E3F40001000100000002 /* OfflineRepoItem.swift in Sources */,
+				C1D2E3F40001000100000004 /* OfflineRepository.swift in Sources */,
+				C1D2E3F40001000100000006 /* SwiftDataOfflineViewModel.swift in Sources */,
+				C1D2E3F40001000100000008 /* SwiftDataOfflineStorageView.swift in Sources */,
+				C1D2E3F4000100010000000A /* SwiftDataStack.swift in Sources */,
+				C1D2E3F4000100010000000C /* OfflineBackgroundSyncScheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

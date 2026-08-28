@@ -200,6 +200,8 @@ Use this checklist to verify all files in this project adhere to the modern iOS 
 
 - [x] **`HomeViewModel.swift`**: Uses `@Observable @MainActor` with standard `var` properties (Zero `@Published`).
 - [x] **`HomeView.swift`**: Uses `@State private var homeViewModel = HomeViewModel()`.
+- [x] **`SwiftDataOfflineViewModel.swift`**: Uses `@Observable @MainActor` with 4 normalized SwiftData tables and structured concurrency.
+- [x] **`SwiftDataOfflineStorageView.swift`**: Uses `@State` and `@Bindable` for clean two-way UI bindings.
 - [x] **`ApiClient.swift`**: Conforms to `Sendable` with native `URLSession` `async/await`.
 - [x] **`SearchItem.swift`**: Conforms to `Decodable, Hashable, Identifiable, Sendable`.
 - [ ] **`MemoryLeakDetectionView.swift`**: Refactor educational demo classes from `ObservableObject` + `@Published` to `@Observable`.

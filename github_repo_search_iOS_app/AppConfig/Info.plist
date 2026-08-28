@@ -62,5 +62,26 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires location access to demonstrate one-time GPS acquisition and foreground tracking.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app requires background location access to demonstrate continuous location updates and SDK telemetry ingestion.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app requires continuous background location access to demonstrate SDK telemetry tracking.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app requires Bluetooth access to scan for nearby BLE peripherals and iBeacons.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This app requires Bluetooth access to discover nearby beacons.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>bluetooth-central</string>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>dinakar.app.github-repo-search-iOS-app.offline-sync</string>
+	</array>
 </dict>
 </plist>

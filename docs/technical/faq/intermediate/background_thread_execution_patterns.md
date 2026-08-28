@@ -892,6 +892,7 @@ DispatchQueue.global().async {
 
 ## See Also
 
+- [SwiftData Offline Storage & BGTaskScheduler Architecture](swiftdata_offline_storage_sync_architecture.md)
 - [Memory Leak Detection](advanced/memory_leak_detection.md)
 - [iOS 17 Observation Migration Guide](ios17_observation_migration_guide.md)
 - [Architecture Patterns](../../architecture_patterns.md)
