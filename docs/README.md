@@ -7,6 +7,7 @@
 ## Technical Documentation
 - [Architecture Overview](technical/architecture_overview.md) - High-level architecture with diagrams
 - [Architecture Patterns](technical/architecture_patterns.md) - MVVM, DI, and design patterns
+- [SwiftData Offline Storage & BGTaskScheduler Architecture](technical/faq/intermediate/swiftdata_offline_storage_sync_architecture.md) - 3-Tier SwiftData persistence, `@ModelActor`, and OS-level `BGTaskScheduler` background sync
 - [Security](technical/security.md) - Security best practices and measures
 - [Code Style](technical/code_style.md) - SwiftLint and formatting
 - [Analytics](technical/analytics.md) - Event tracking system
@@ -15,7 +16,7 @@
 ## Technical FAQ
 - [FAQ Overview](technical/faq/readme.md) - Technical training materials organized by difficulty
 - [Beginner Topics](technical/faq/beginner/) - Fundamentals (optionals, lifecycle, storage, caching, error handling)
-- [Intermediate Topics](technical/faq/intermediate/) - Advanced patterns (async/await, DI, API rate limiting, iOS 17 migration)
+- [Intermediate Topics](technical/faq/intermediate/) - Advanced patterns (async/await, DI, SwiftData & BGTaskScheduler, API rate limiting, iOS 17 migration)
 - [Advanced Topics](technical/faq/advanced/) - Performance and memory optimization
 
 ## Testing Documentation

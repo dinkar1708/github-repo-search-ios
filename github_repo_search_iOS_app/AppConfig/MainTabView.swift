@@ -138,6 +138,32 @@ struct SamplesListView: View {
             destination: AnyView(LifecycleMethodsOverviewView())
         ),
 
+        // Intermediate Examples (Location, Bluetooth & SDK Data Infrastructure)
+        SampleItem(
+            title: "Location Tracking (One-Time & Background)",
+            description: "Single fix, continuous stream, background tracking & geofencing",
+            category: "Intermediate",
+            destination: AnyView(LocationTrackingSampleView())
+        ),
+        SampleItem(
+            title: "Bluetooth & iBeacon Scanner",
+            description: "CoreBluetooth BLE scanning, RSSI signal estimation & iBeacon ranging",
+            category: "Intermediate",
+            destination: AnyView(BluetoothBeaconSampleView())
+        ),
+        SampleItem(
+            title: "Location & SDK Pipeline",
+            description: "Telemetry buffer queue, adaptive batching, and Cloud DWH ingestion",
+            category: "Intermediate",
+            destination: AnyView(LocationSDKPipelineOverviewView())
+        ),
+        SampleItem(
+            title: "SwiftData Offline Storage",
+            description: "@Model persistence, @Query, background @ModelActor & cascade relationships",
+            category: "Intermediate",
+            destination: AnyView(SwiftDataOfflineStorageView())
+        ),
+
         // Advanced / Dev Tools
         SampleItem(
             title: "Memory Leak Detection",
