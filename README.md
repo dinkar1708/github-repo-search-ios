@@ -50,8 +50,8 @@ Comprehensive documentation organized by category. [View all documentation](docs
 - [Advanced Topics](docs/technical/faq/advanced/) - Performance and memory optimization
 
 ### Testing Documentation
-- [Testing Overview](docs/testing/readme.md) - Testing strategy (8 tests, 51.87% coverage)
-- [Unit Tests](docs/testing/unit_tests.md) - Component testing guide
+- [Testing Overview](docs/testing/readme.md) - Testing strategy: Apple's **Swift Testing** (`@Test`, `#expect`) + XCTest (100% pass rate)
+- [Unit Tests](docs/testing/unit_tests.md) - Component & Persistence testing guide
 - [UI Tests](docs/testing/ui_tests.md) - XCUITest guide
 - [Integration Tests](docs/testing/integration_tests.md) - Multi-component testing
 - [Performance Tests](docs/testing/performance_tests.md) - Metrics and benchmarks

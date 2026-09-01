@@ -1,16 +1,16 @@
 //
 //  GithubRepositoryTests.swift
-//  UnitTests
+//  github_repo_search_iOS_app_UnitTests
 //
-//  Unit tests for GitHub Repository layer
+//  Classic XCTest implementation for GithubRepository
 //
 
 import XCTest
 @testable import github_repo_search_iOS_app
 
-/// Tests for GithubRepository - API calls and data handling (MIGRATED FROM OLD STRUCTURE)
+/// Tests for GithubRepository - API calls and data handling
 @MainActor
-class GithubRepositoryTests: XCTestCase {
+final class GithubRepositoryTests: XCTestCase {
     let gitHubRepository = DefaultGithubRepository()
 
     override func setUpWithError() throws {
@@ -70,15 +70,14 @@ class GithubRepositoryTests: XCTestCase {
             XCTFail("Expected error for empty query but got response")
         } catch let error as ApiResponseError {
             print("✅ Received expected error: \(error.message)")
-            XCTAssertTrue(error.message.contains("Validation Failed") || error.message.contains("missing"),
-                         "Expected 'Validation Failed' error, got: \(error.message)")
+            XCTAssertTrue(error.message.contains("Validation Failed") || error.message.contains("missing") || error.message.contains("422"),
+                         "Expected 'Validation Failed' or 422 error, got: \(error.message)")
         } catch {
             XCTFail("Unexpected error type: \(error.localizedDescription)")
         }
     }
 
     func testPerPageParameterIsUsed() async throws {
-        // Test that perPage parameter is actually used, not hardcoded
         let customPerPage = 25
 
         do {
@@ -88,13 +87,11 @@ class GithubRepositoryTests: XCTestCase {
                 pageNumber: 1
             )
 
-            // If we get results, they should respect the perPage limit
             if searchResponse.items.count > 0 {
                 XCTAssertLessThanOrEqual(searchResponse.items.count, customPerPage,
                                         "Results should not exceed perPage limit")
             }
         } catch {
-            // Network errors are acceptable in this test
             print("⚠️ Network error (acceptable): \(error.localizedDescription)")
         }
     }

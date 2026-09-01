@@ -11,13 +11,18 @@ This document contains curated links to official Apple documentation and industr
 - **State Management**: `@State` and `@Observable` (not `ObservableObject`)
 - **Concurrency**: Swift async/await with `@MainActor`
 - **Data Flow**: View → ViewModel → Repository → API Client
-- **Persistence**: Keychain for secure favorites storage (migrated from UserDefaults)
+- **Persistence**: SwiftData (4 normalized relational tables) + Keychain for secure secrets
+- **Background Scheduling**: `BGTaskScheduler` (`BGAppRefreshTask`) for opportunistic cloud sync
+- **Testing**: Dual-Framework (**Apple Swift Testing** `@Test` + **Classic XCTest**)
 - **Logging**: OSLog with type-safe categories via `LogCategory` enum
 - **Caching**: Multi-layer NSCache with TTL support
 - **Analytics**: Event-based tracking abstraction layer
 
 ### Key Design Decisions
-- ✅ Modern Swift patterns (Observable macro, async/await)
+- ✅ Modern Swift patterns (Observable macro, async/await, `@ModelActor`)
+- ✅ Dual-Framework Testing (Apple Swift Testing + XCTest)
+- ✅ Background Sync Scheduling via Apple's native `BGTaskScheduler`
+- ✅ Relational offline persistence with SwiftData & in-memory test isolation
 - ✅ Custom DI framework with @Injected property wrapper (zero boilerplate)
 - ✅ Protocol-based repository layer for testability
 - ✅ Sendable conformance for thread safety
@@ -97,20 +102,26 @@ This document contains curated links to official Apple documentation and industr
 
 ## Testing Best Practices
 
-### Unit Testing with XCTest
-- **[XCTest Framework - Apple](https://developer.apple.com/documentation/xctest)** - Official XCTest documentation
-- **[Testing Your Apps in Xcode](https://developer.apple.com/documentation/xcode/testing-your-apps-in-xcode)** - Official testing guide
-- **[XCTest Best Practices](https://maestro.dev/insights/xctest-best-practices-ios-testing)** - Comprehensive testing guide
-- **[Unit Testing in iOS 2025](https://medium.com/@Rutik_Maraskolhe/unit-testing-in-ios-2025-cutting-edge-strategies-tools-and-trends-for-high-quality-apps-eee2876e47ba)** - Modern testing strategies
+### 🍏 Modern Swift Testing (iOS 17+ / Swift 6)
+- **[Swift Testing Framework - Apple](https://developer.apple.com/documentation/testing)** — Official Swift Testing documentation covering `@Suite`, `@Test`, `#expect`, `#require`, and tags.
+- **[Migrating a Test from XCTest to Swift Testing](https://developer.apple.com/documentation/testing/migratingfromxctest)** — Official Apple migration guide from `XCTestCase` to `@Test`.
+- **[Parameterized Testing with Argument Matrices](https://developer.apple.com/documentation/testing/parameterizedtesting)** — Running datasets concurrently via `@Test(arguments: [...])`.
+- **[WWDC 2024: Meet Swift Testing (Session 10179)](https://developer.apple.com/videos/play/wwdc2024/10179/)** — WWDC introductory session on architecture and Xcode integration.
+- **[WWDC 2024: Go Further with Swift Testing (Session 10195)](https://developer.apple.com/videos/play/wwdc2024/10195/)** — Advanced session on traits, tags, and parallel actor isolation.
+- **[Swift Testing GitHub Repository (`swiftlang/swift-testing`)](https://github.com/swiftlang/swift-testing)** — Official open-source package repository.
+
+### 🏛️ Classic XCTest & UI Automation
+- **[XCTest Framework - Apple](https://developer.apple.com/documentation/xctest)** — Official XCTest documentation for UI Automation (`XCUIApplication`) and Performance Metrics.
+- **[Testing Your Apps in Xcode](https://developer.apple.com/documentation/xcode/testing-your-apps-in-xcode)** — Official testing workflow guide.
+- **[XCTest Best Practices](https://maestro.dev/insights/xctest-best-practices-ios-testing)** — Comprehensive testing guide.
 
 ### Testing Guidelines
-- Write single-assertion tests for clarity
-- Use descriptive test names (e.g., `testLoginWithValidCredentials_shouldReturnSuccessResponse`)
-- Mock dependencies for stable, repeatable tests
-- Keep tests small and focused on one functionality
-- Use `@testable import` for better code access
-- Run tests on multiple devices and simulators in parallel
-- Aim for high code coverage using Xcode's coverage visualization
+- **Modern Unit & Persistence Tests:** Write with **Swift Testing** using `@Test`, `#expect`, and `@Test(arguments: ...)` matrices.
+- **UI & Performance Tests:** Maintain with **XCTest** using `XCUIApplication` and `measure(metrics: ...)`.
+- Write single-assertion tests for clarity.
+- Use descriptive test names in `@Test("...")`.
+- Mock dependencies for stable, repeatable tests.
+- Aim for high code coverage using Xcode's coverage visualization.
 
 ### Testing Benefits
 - Catch bugs early in development

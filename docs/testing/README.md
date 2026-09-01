@@ -9,56 +9,38 @@ Comprehensive testing strategy for GitHub Repository Search iOS app.
 - Success Rate: 100%
 - Code Coverage: 51.87%
 
+## Dual-Framework Testing Architecture
+
+We maintain a **dual-framework test suite** demonstrating enterprise migration competency:
+
+```text
+github_repo_search_iOS_app_UnitTests/
+├── 🍏 Modern_SwiftTesting/              - Apple's Swift Testing Framework (iOS 17.0+ / Swift 6)
+│   ├── SwiftDataOfflineTests.swift      - SwiftData 4-Table Persistence, @ModelActor, BGTaskScheduler
+│   └── OfflineSyncMatrixTests.swift     - Parameterized filter matrices, relational cascading, bookmarks
+│
+└── 🏛️ Classic_XCTest/                  - Production-Grade XCTest Framework (Industry Standard)
+    ├── HomeViewModelTests.swift         - Home search, debounce, pagination, and state flow
+    ├── UserProfileViewModelTests.swift  - Profile fetching, fork filtering, repository listing
+    ├── ApiClientTests.swift             - URLSession request building, URL encoding, HTTP methods
+    ├── GithubRepositoryTests.swift      - Network repository boundary & error decoding
+    └── FavoritesManagerTests.swift      - Keychain-backed favorites, duplicate prevention, analytics
+```
+
 ## Test Categories
 
-### Unit Tests
-Tests for individual components in isolation.
+### 1. Unit Tests (Modern Swift Testing + Classic XCTest)
+- **Modern Swift Testing (`import Testing`):** Persisted relational models, SwiftData `@ModelActor`, background ingestion, parameterized sync matrices (`@Test(arguments: ...)`).
+- **Classic XCTest (`import XCTest`):** Production ViewModels, ApiClient, repository mapping, and Keychain favorites.
+- **See:** [unit_tests.md](unit_tests.md) and [`github_repo_search_iOS_app_UnitTests/README.md`](../../github_repo_search_iOS_app_UnitTests/README.md)
 
-**See:** [unit_tests.md](unit_tests.md)
-
-- 4 unit tests
-- API client testing
-- Repository pattern testing
-- Error handling
-
-### UI Tests
-Tests for user interface and interactions.
-
+### 2. UI Tests (XCUITest)
+Tests for user interface and interactions (`XCUIApplication`).
 **See:** [ui_tests.md](ui_tests.md)
 
-- 3 UI interaction tests
-- Screen navigation
-- User flows
-
-### Integration Tests
-Tests for multiple components working together.
-
-**See:** [integration_tests.md](integration_tests.md)
-
-- Status: Not yet implemented
-- Recommended tests listed
-
-### Performance Tests
-Tests for app performance metrics.
-
-**See:** [performance_tests.md](performance_tests.md)
-
-- 1 launch performance test
-- Baseline measurements
-- Profiling with Xcode Instruments
-
-### Stress Tests
-Tests for app behavior under extreme conditions.
-
-**See:**
-- [stress_testing.md](stress_testing.md) - Comprehensive stress testing guide
-- [stress_tests_setup.md](stress_tests_setup.md) - Quick setup and running instructions
-
-**Tests:**
-- Heavy scrolling (60s continuous)
-- Rapid search operations
-- Extreme scrolling (100+ swipes)
-- Memory and CPU monitoring
+### 3. Performance & Stress Tests (XCTest Metrics)
+Tests for app performance metrics (`measure(metrics: ...)`).
+**See:** [performance_tests.md](performance_tests.md) and [stress_testing.md](stress_testing.md)
 
 ## Quick Start
 
@@ -106,8 +88,8 @@ Current: 51.87% (improving)
 ```
 Tests/
 ├── github_repo_search_iOS_appTests/
-│   ├── GitRepository_appTests.swift       # Unit tests
-│   └── github_repo_search_iOS_appTests.swift
+│   ├── Modern_SwiftTesting/           # Swift Testing suite
+│   └── Classic_XCTest/                # XCTest suite
 └── github_repo_search_iOS_appUITests/
     ├── HomeView_appUITests.swift          # UI tests
     └── github_repo_search_iOS_appUITests.swift
@@ -120,8 +102,17 @@ Tests/
 3. Check [code_coverage.md](code_coverage.md) for coverage best practices
 4. Write new tests following the patterns
 
-## Resources
+## Resources & Official Apple Documentation
 
-- [Apple XCTest Documentation](https://developer.apple.com/documentation/xctest)
-- [Code Coverage Guide](https://developer.apple.com/documentation/xcode/determining-how-much-code-your-tests-cover)
-- [Testing Your Apps in Xcode](https://developer.apple.com/documentation/xcode/testing-your-apps-in-xcode)
+### 🍏 Modern Swift Testing
+- **[Swift Testing Framework Overview](https://developer.apple.com/documentation/testing)** — Official Apple developer documentation for `@Suite`, `@Test`, `#expect`, and tags.
+- **[Migrating a Test from XCTest to Swift Testing](https://developer.apple.com/documentation/testing/migratingfromxctest)** — Apple's official step-by-step guide for migrating to Swift Testing.
+- **[Parameterized Testing with Argument Matrices](https://developer.apple.com/documentation/testing/parameterizedtesting)** — Running datasets concurrently via `@Test(arguments: [...])`.
+- **[WWDC 2024: Meet Swift Testing (Session 10179)](https://developer.apple.com/videos/play/wwdc2024/10179/)** — WWDC introductory session.
+- **[WWDC 2024: Go Further with Swift Testing (Session 10195)](https://developer.apple.com/videos/play/wwdc2024/10195/)** — WWDC advanced session on parallel execution.
+- **[Swift Testing Open Source Repository](https://github.com/swiftlang/swift-testing)** — Official open-source codebase.
+
+### 🏛️ Classic XCTest & UI Automation
+- **[Apple XCTest Documentation](https://developer.apple.com/documentation/xctest)** — Documentation for XCTest, XCUIApplication, and UI Automation.
+- **[Testing Your Apps in Xcode](https://developer.apple.com/documentation/xcode/testing-your-apps-in-xcode)** — Xcode testing workflows.
+- **[Code Coverage Guide](https://developer.apple.com/documentation/xcode/determining-how-much-code-your-tests-cover)** — Measuring test coverage in Xcode.
