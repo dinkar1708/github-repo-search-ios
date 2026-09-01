@@ -1,22 +1,20 @@
 //
 //  ApiClientTests.swift
-//  UnitTests
+//  github_repo_search_iOS_app_UnitTests
 //
-//  Created for enterprise-scale testing structure
+//  Classic XCTest implementation for ApiClient
 //
 
 import XCTest
 @testable import github_repo_search_iOS_app
 
 /// Unit tests for ApiClient - testing network layer in isolation
-class ApiClientTests: XCTestCase {
+final class ApiClientTests: XCTestCase {
 
     override func setUpWithError() throws {
-        // Reset any state before each test
     }
 
     override func tearDownWithError() throws {
-        // Clean up after each test
     }
 
     // MARK: - URL Building Tests

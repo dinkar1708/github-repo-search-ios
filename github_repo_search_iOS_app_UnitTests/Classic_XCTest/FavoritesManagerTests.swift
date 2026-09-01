@@ -2,7 +2,7 @@
 //  FavoritesManagerTests.swift
 //  github_repo_search_iOS_app_UnitTests
 //
-//  Created for unit testing FavoritesManager
+//  Classic XCTest implementation for FavoritesManager
 //
 
 import XCTest
@@ -26,14 +26,20 @@ final class FavoritesManagerTests: XCTestCase {
             analyticsService: mockAnalytics
         )
 
-        // Create new instance for testing
+        // Reset singleton collections and mocks
         sut = FavoritesManager.shared
+        sut.favoriteUsers.removeAll()
+        sut.favoriteRepositories.removeAll()
+        mockAnalytics.trackedEvents.removeAll()
 
         // Wait for initial load to complete
         try await Task.sleep(nanoseconds: 100_000_000)
     }
 
     override func tearDown() async throws {
+        sut.favoriteUsers.removeAll()
+        sut.favoriteRepositories.removeAll()
+        mockAnalytics.trackedEvents.removeAll()
         sut = nil
         mockRepository = nil
         mockAnalytics = nil
@@ -432,7 +438,7 @@ final class FavoritesManagerTests: XCTestCase {
             openIssues: 5,
             watchers: 50,
             defaultBranch: "main",
-            score: 1.0
+            score: 1
         )
     }
 }

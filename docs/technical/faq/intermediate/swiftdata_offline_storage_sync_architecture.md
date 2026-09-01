@@ -229,12 +229,17 @@ graph LR
 * **`@Observable @MainActor final class SwiftDataOfflineViewModel`**: Tracks state changes automatically without `@Published`.
 * **`SwiftDataOfflineStorageView`**: Consumes `@State private var viewModel` and `@Bindable var boundViewModel = viewModel`.
 
+### 5. Modern Unit Testing: [`SwiftDataOfflineTests.swift`](../../../../github_repo_search_iOS_app_UnitTests/Feature/SwiftDataOfflineTests.swift)
+* Built with Apple's new **Swift Testing** framework (`import Testing`, `@Suite`, `@Test`, `#expect`).
+* Covers in-memory schema initialization, parameterized relational integrity tests, `@ModelActor` background writes, two-way sync state machines, and `BGTaskScheduler` manual simulations.
+
 ---
 
 ## 🎙️ Staff Engineer Assessment Defense (30 Seconds)
 
 > *"In our offline architecture, we decoupled persistence into a Clean 3-Tier structure:  
 > 1. **Data Layer (`SwiftDataStack`)**: Manages the `ModelContainer` for 4 normalized relational tables and provides a `nonisolated` factory to spawn `@ModelActor` background workers without main thread hopping.  
-> 2. **Background Scheduler (`OfflineBackgroundSyncScheduler`)**: Hooks into Apple's `BGTaskScheduler` (the iOS counterpart to Android's WorkManager) to opportunistically flush pending SQLite data to cloud APIs during system background windows.  
+> 2. **Background Scheduler (`OfflineBackgroundSyncScheduler`)**: Hooks into Apple's `BGTaskScheduler` to opportunistically flush pending SQLite data to cloud APIs.  
 > 3. **Repository Layer (`SwiftDataOfflineRepository`)**: Coordinates local queries via `mainContext` for instantaneous UI diffing while delegating heavy ingestion to background actors.  
-> 4. **Presentation Layer (`SwiftDataOfflineViewModel`)**: Uses Swift 6's `@Observable` macro to eliminate Combine's `@Published` overhead, achieving 120 FPS buttery-smooth UI invalidations."*
+> 4. **Presentation Layer (`SwiftDataOfflineViewModel`)**: Uses Swift 6's `@Observable` macro to eliminate Combine's `@Published` overhead, achieving 120 FPS buttery-smooth UI invalidations.  
+> 5. **Modern Test Suite (`SwiftDataOfflineTests`)**: 100% verified using Apple's new Swift Testing framework (`@Test`, `#expect`) with parameterized test matrices."*

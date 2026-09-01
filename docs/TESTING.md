@@ -19,12 +19,13 @@ Testing strategy and coverage for GitHub Repository Search iOS app.
 
 ## Test Type Matrix
 
-| Test Type     | Framework          | What It Verifies                    | Our Coverage |
-|---------------|--------------------|------------------------------------|--------------|
-| Unit          | XCTest             | One function or class, isolated    | 4 tests      |
-| Integration   | XCTest             | Multiple components together       | 0 tests      |
-| UI            | XCTest (XCUI)      | Real user flows on screen          | 3 tests      |
-| Performance   | XCTest (Metrics)   | Speed and memory over time         | 1 test       |
+| Test Type     | Framework                     | What It Verifies                    | Our Coverage |
+|---------------|-------------------------------|------------------------------------|--------------|
+| **Unit (Modern)** | **Swift Testing (`@Test`)** | SwiftData persistence, `@ModelActor`, background sync | **5 suites / tests (100% Passing)** |
+| Unit (Classic) | XCTest                        | ViewModels, API Client, Favorites  | 4 tests      |
+| Integration   | XCTest                        | Multiple components together       | 2 flows      |
+| UI            | XCTest (XCUI)                 | Real user flows on screen          | 3 tests      |
+| Performance   | XCTest (Metrics)              | Speed and memory over time         | 1 test       |
 
 **See [testing/readme.md](testing/readme.md) for detailed folder structure and test organization.**
 
@@ -429,3 +430,20 @@ Apple's official guidance: Coverage exists to **find untested paths and guide ne
 **3. Assertion Quality Matters More Than Percentage**
 
 A file at 85% with sharp assertions beats a file at 100% with none.
+
+---
+
+## Official Apple Documentation & Resources
+
+### 🍏 Modern Swift Testing
+- **[Swift Testing Framework Overview](https://developer.apple.com/documentation/testing)** — Official Apple developer documentation for `@Suite`, `@Test`, `#expect`, and tags.
+- **[Migrating a Test from XCTest to Swift Testing](https://developer.apple.com/documentation/testing/migratingfromxctest)** — Apple's official step-by-step guide for migrating to Swift Testing.
+- **[Parameterized Testing with Argument Matrices](https://developer.apple.com/documentation/testing/parameterizedtesting)** — Running datasets concurrently via `@Test(arguments: [...])`.
+- **[WWDC 2024: Meet Swift Testing (Session 10179)](https://developer.apple.com/videos/play/wwdc2024/10179/)** — WWDC introductory session on Swift Testing architecture.
+- **[WWDC 2024: Go Further with Swift Testing (Session 10195)](https://developer.apple.com/videos/play/wwdc2024/10195/)** — WWDC deep dive into traits and parallel execution.
+- **[Swift Testing Open Source Repository](https://github.com/swiftlang/swift-testing)** — Official open-source package repository.
+
+### 🏛️ Classic XCTest & UI Automation
+- **[Apple XCTest Documentation](https://developer.apple.com/documentation/xctest)** — Documentation for XCTest, XCUIApplication, and UI Automation.
+- **[Testing Your Apps in Xcode](https://developer.apple.com/documentation/xcode/testing-your-apps-in-xcode)** — Xcode testing workflows.
+- **[Code Coverage Guide](https://developer.apple.com/documentation/xcode/determining-how-much-code-your-tests-cover)** — Measuring test coverage in Xcode.

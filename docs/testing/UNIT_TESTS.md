@@ -5,27 +5,28 @@ Unit tests verify individual components in isolation using mocks and stubs.
 
 ## Current Status
 
-- Total: 5 unit test files
-- Status: All passing
-- Coverage: 51.87% overall (target: 70%+)
-  - ApiClient: 88.89%
-  - SearchItem: 100%
-  - HomeViewModel: Tested
-  - UserProfileViewModel: Tested
-  - FavoritesManager: Tested (NEW)
+- **Architecture:** Dual-Framework (**Swift Testing** + **Classic XCTest**)
+- **Modern Swift Testing Files:** 2 suites (`SwiftDataOfflineTests.swift`, `OfflineSyncMatrixTests.swift`)
+- **Classic XCTest Files:** 5 suites (`HomeViewModelTests.swift`, `UserProfileViewModelTests.swift`, `ApiClientTests.swift`, `GithubRepositoryTests.swift`, `FavoritesManagerTests.swift`)
+- **Status:** All passing (100%)
+- **Coverage:** 51.87% overall (target: 70%+)
 
 ## Test Location
 
-```
+```text
 github_repo_search_iOS_app_UnitTests/
-├── Data/Network/
-│   ├── ApiClientTests.swift              # API client tests
-│   └── GithubRepositoryTests.swift       # Repository layer tests
-├── ViewModels/
-│   ├── HomeViewModelTests.swift          # Repository search ViewModel tests
-│   └── UserProfileViewModelTests.swift   # User profile ViewModel tests
-└── Feature/
-    └── FavoritesManagerTests.swift       # Favorites management tests (NEW)
+├── 🍏 Modern_SwiftTesting/              - Apple's Swift Testing Framework (iOS 17.0+ / Swift 6)
+│   ├── SwiftDataOfflineTests.swift      - SwiftData 4-Table Persistence, @ModelActor, BGTaskScheduler
+│   └── OfflineSyncMatrixTests.swift     - Parameterized filter matrices, relational cascading, bookmarks
+│
+├── 🏛️ Classic_XCTest/                  - Production-Grade XCTest Framework (Industry Standard)
+│   ├── HomeViewModelTests.swift         - Home search, debounce, pagination, and state flow
+│   ├── UserProfileViewModelTests.swift  - Profile fetching, fork filtering, repository listing
+│   ├── ApiClientTests.swift             - URLSession request building, URL encoding, HTTP methods
+│   ├── GithubRepositoryTests.swift      - Network repository boundary & error decoding
+│   └── FavoritesManagerTests.swift      - Keychain-backed favorites, duplicate prevention, analytics
+│
+└── README.md                            - Dual-Framework Architecture & Interview Defense Guide
 ```
 
 ## Test Cases

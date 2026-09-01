@@ -2,7 +2,7 @@
 //  HomeViewModelTests.swift
 //  github_repo_search_iOS_app_UnitTests
 //
-//  Created for unit testing HomeViewModel
+//  Classic XCTest implementation for HomeViewModel
 //
 
 import XCTest
@@ -103,7 +103,6 @@ final class HomeViewModelTests: XCTestCase {
         try? await Task.sleep(nanoseconds: 100_000_000)
 
         // Then - loading state should be set initially
-        // Note: This is timing-dependent, so we just verify searchText was set
         XCTAssertEqual(sut.searchText, "swift")
     }
 
@@ -221,7 +220,7 @@ final class HomeViewModelTests: XCTestCase {
             openIssues: 5,
             watchers: 50,
             defaultBranch: "main",
-            score: 1.0
+            score: 1
         )
 
         // When - trigger pagination check

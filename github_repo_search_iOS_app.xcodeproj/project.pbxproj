@@ -19,6 +19,13 @@
 		C1D2E3F40001000100000008 /* SwiftDataOfflineStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F40001000100000007 /* SwiftDataOfflineStorageView.swift */; };
 		C1D2E3F4000100010000000A /* SwiftDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F40001000100000009 /* SwiftDataStack.swift */; };
 		C1D2E3F4000100010000000C /* OfflineBackgroundSyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F4000100010000000B /* OfflineBackgroundSyncScheduler.swift */; };
+		D1E2F3A40001000100000002 /* SwiftDataOfflineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A40001000100000001 /* SwiftDataOfflineTests.swift */; };
+		D1E2F3A40001000100000004 /* OfflineSyncMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A40001000100000003 /* OfflineSyncMatrixTests.swift */; };
+		D1E2F3A40001000100000006 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A40001000100000005 /* HomeViewModelTests.swift */; };
+		D1E2F3A40001000100000008 /* UserProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A40001000100000007 /* UserProfileViewModelTests.swift */; };
+		D1E2F3A4000100010000000A /* ApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A40001000100000009 /* ApiClientTests.swift */; };
+		D1E2F3A4000100010000000C /* GithubRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A4000100010000000B /* GithubRepositoryTests.swift */; };
+		D1E2F3A4000100010000000E /* FavoritesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A4000100010000000D /* FavoritesManagerTests.swift */; };
 		A1B2C3D40001000100000002 /* AppLifecycleExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40001000100000001 /* AppLifecycleExampleView.swift */; };
 		A1B2C3D40001000100000004 /* SceneLifecycleExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40001000100000003 /* SceneLifecycleExampleView.swift */; };
 		A1B2C3D40001000100000006 /* SwiftUIViewLifecycleExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40001000100000005 /* SwiftUIViewLifecycleExampleView.swift */; };
@@ -196,6 +203,13 @@
 		C1D2E3F40001000100000007 /* SwiftDataOfflineStorageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataOfflineStorageView.swift; path = Samples/Intermediate/Offline/SwiftDataOfflineStorageView.swift; sourceTree = "<group>"; };
 		C1D2E3F40001000100000009 /* SwiftDataStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataStack.swift; path = Samples/Intermediate/Offline/SwiftDataStack.swift; sourceTree = "<group>"; };
 		C1D2E3F4000100010000000B /* OfflineBackgroundSyncScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OfflineBackgroundSyncScheduler.swift; path = Samples/Intermediate/Offline/OfflineBackgroundSyncScheduler.swift; sourceTree = "<group>"; };
+		D1E2F3A40001000100000001 /* SwiftDataOfflineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataOfflineTests.swift; path = SwiftDataOfflineTests.swift; sourceTree = "<group>"; };
+		D1E2F3A40001000100000003 /* OfflineSyncMatrixTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OfflineSyncMatrixTests.swift; path = OfflineSyncMatrixTests.swift; sourceTree = "<group>"; };
+		D1E2F3A40001000100000005 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeViewModelTests.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		D1E2F3A40001000100000007 /* UserProfileViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserProfileViewModelTests.swift; path = UserProfileViewModelTests.swift; sourceTree = "<group>"; };
+		D1E2F3A40001000100000009 /* ApiClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApiClientTests.swift; path = ApiClientTests.swift; sourceTree = "<group>"; };
+		D1E2F3A4000100010000000B /* GithubRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GithubRepositoryTests.swift; path = GithubRepositoryTests.swift; sourceTree = "<group>"; };
+		D1E2F3A4000100010000000D /* FavoritesManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FavoritesManagerTests.swift; path = FavoritesManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -685,35 +699,32 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		78E05913300DD04800560150 /* Data */ = {
+		D1E2F3A40001000100000010 /* Modern_SwiftTesting */ = {
 			isa = PBXGroup;
 			children = (
-				78E0590F300DD04800560150 /* Models */,
-				78E05912300DD04800560150 /* Network */,
+				D1E2F3A40001000100000001 /* SwiftDataOfflineTests.swift */,
+				D1E2F3A40001000100000003 /* OfflineSyncMatrixTests.swift */,
 			);
-			path = Data;
+			path = Modern_SwiftTesting;
 			sourceTree = "<group>";
 		};
-		78E05914300DD04800560150 /* ViewModels */ = {
+		D1E2F3A40001000100000011 /* Classic_XCTest */ = {
 			isa = PBXGroup;
 			children = (
+				D1E2F3A40001000100000005 /* HomeViewModelTests.swift */,
+				D1E2F3A40001000100000007 /* UserProfileViewModelTests.swift */,
+				D1E2F3A40001000100000009 /* ApiClientTests.swift */,
+				D1E2F3A4000100010000000B /* GithubRepositoryTests.swift */,
+				D1E2F3A4000100010000000D /* FavoritesManagerTests.swift */,
 			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		78E05915300DD04800560150 /* Feature */ = {
-			isa = PBXGroup;
-			children = (
-				78E05914300DD04800560150 /* ViewModels */,
-			);
-			path = Feature;
+			path = Classic_XCTest;
 			sourceTree = "<group>";
 		};
 		78E05917300DD04800560150 /* github_repo_search_iOS_app_UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				78E05913300DD04800560150 /* Data */,
-				78E05915300DD04800560150 /* Feature */,
+				D1E2F3A40001000100000010 /* Modern_SwiftTesting */,
+				D1E2F3A40001000100000011 /* Classic_XCTest */,
 				78E05916300DD04800560150 /* README.md */,
 			);
 			path = github_repo_search_iOS_app_UnitTests;
@@ -1066,6 +1077,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1E2F3A40001000100000002 /* SwiftDataOfflineTests.swift in Sources */,
+				D1E2F3A40001000100000004 /* OfflineSyncMatrixTests.swift in Sources */,
+				D1E2F3A40001000100000006 /* HomeViewModelTests.swift in Sources */,
+				D1E2F3A40001000100000008 /* UserProfileViewModelTests.swift in Sources */,
+				D1E2F3A4000100010000000A /* ApiClientTests.swift in Sources */,
+				D1E2F3A4000100010000000C /* GithubRepositoryTests.swift in Sources */,
+				D1E2F3A4000100010000000E /* FavoritesManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
