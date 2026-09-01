@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import Observation
 
 struct StatePropertyWrappersView: View {
     var body: some View {
@@ -219,11 +220,12 @@ struct PlayPauseButton: View {
     }
 }
 
-// MARK: - @StateObject Example
+// MARK: - @Observable (iOS 17+) & @StateObject Comparison
 
-class CounterViewModel: ObservableObject {
-    @Published var count = 0
-    @Published var history: [String] = []
+@Observable
+class CounterViewModel {
+    var count = 0
+    var history: [String] = []
 
     func increment() {
         count += 1
@@ -242,12 +244,12 @@ class CounterViewModel: ObservableObject {
 }
 
 struct StateObjectExample: View {
-    @StateObject private var viewModel = CounterViewModel()
+    @State private var viewModel = CounterViewModel()
 
     var body: some View {
         ExampleCard(
-            title: "3. @StateObject - Observable Object",
-            description: "For complex state with ObservableObject"
+            title: "3. @Observable (iOS 17+) vs @StateObject",
+            description: "Modern Swift Observation without @Published boilerplate"
         ) {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Count: \(viewModel.count)")
@@ -289,17 +291,19 @@ struct StateObjectExample: View {
                 }
 
                 CodeExample("""
-                class CounterViewModel: ObservableObject {
-                    @Published var count = 0  // ← Auto-notifies changes
+                // ✅ Modern iOS 17+: @Observable with standard variables
+                @Observable
+                class CounterViewModel {
+                    var count = 0  // ← Automatically observable!
 
                     func increment() {
-                        count += 1  // ← View updates automatically
+                        count += 1
                     }
                 }
 
                 struct MyView: View {
-                    @StateObject private var viewModel = CounterViewModel()
-                    // ↑ View OWNS this object
+                    @State private var viewModel = CounterViewModel()
+                    // ↑ Standard @State manages @Observable lifecycle
 
                     var body: some View {
                         Text("\\(viewModel.count)")
@@ -308,8 +312,8 @@ struct StateObjectExample: View {
                 }
 
                 When to use:
-                • @StateObject: View creates & owns the object
-                • @ObservedObject: Object passed from parent
+                • @Observable + @State: Modern standard (iOS 17+)
+                • @Bindable: When passing two-way $ bindings to child views
                 """)
             }
         }

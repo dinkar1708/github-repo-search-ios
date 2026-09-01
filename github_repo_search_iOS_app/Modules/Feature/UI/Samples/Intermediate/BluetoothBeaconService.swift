@@ -42,8 +42,8 @@ struct DiscoveredPeripheral: Identifiable {
 struct DiscoveredBeacon: Identifiable {
     let id: UUID
     let uuid: UUID
-    let major: UInt16
-    let minor: UInt16
+    let major: CLBeaconMajorValue
+    let minor: CLBeaconMinorValue
     let proximity: CLProximity
     let accuracy: CLLocationAccuracy
     let rssi: Int
@@ -51,7 +51,7 @@ struct DiscoveredBeacon: Identifiable {
 
     var proximityDescription: String {
         switch proximity {
-        case .immediate: return "🎯 Immediate (< 0.5m)"
+        case .immediate: return "🔥 Immediate (< 0.5m)"
         case .near: return "📍 Near (0.5m - 3.0m)"
         case .far: return "📡 Far (> 3.0m)"
         case .unknown: return "❓ Unknown"
@@ -61,17 +61,18 @@ struct DiscoveredBeacon: Identifiable {
 }
 
 /// Comprehensive Bluetooth Low Energy (BLE) & iBeacon Scanner Service
+@Observable
 @MainActor
-final class BluetoothBeaconService: NSObject, ObservableObject {
+final class BluetoothBeaconService: NSObject {
     static let shared = BluetoothBeaconService()
 
-    @Published private(set) var bluetoothState: CBManagerState = .unknown
-    @Published private(set) var isScanningBLE: Bool = false
-    @Published private(set) var isRangingBeacons: Bool = false
-    @Published private(set) var discoveredPeripherals: [DiscoveredPeripheral] = []
-    @Published private(set) var discoveredBeacons: [DiscoveredBeacon] = []
-    @Published private(set) var recentLogs: [LifecycleLogEntry] = []
-    @Published private(set) var isSimulating: Bool = false
+    private(set) var bluetoothState: CBManagerState = .unknown
+    private(set) var isScanningBLE: Bool = false
+    private(set) var isRangingBeacons: Bool = false
+    private(set) var discoveredPeripherals: [DiscoveredPeripheral] = []
+    private(set) var discoveredBeacons: [DiscoveredBeacon] = []
+    private(set) var recentLogs: [LifecycleLogEntry] = []
+    private(set) var isSimulating: Bool = false
 
     private var centralManager: CBCentralManager?
     private var locationManager: CLLocationManager?

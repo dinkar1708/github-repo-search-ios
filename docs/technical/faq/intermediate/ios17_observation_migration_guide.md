@@ -1,8 +1,11 @@
-# iOS 17+ Swift Observation Migration & Refactoring Guide
+# iOS 17+ Swift Observation Architecture & Migration Guide
 
 ## Overview
 
-This guide details the complete, official step-by-step refactoring patterns for modernizing SwiftUI applications from legacy Combine-based state management (`ObservableObject`, `@Published`, `@StateObject`) to Apple's modern **Observation Framework (`@Observable`)** introduced in iOS 17 / Swift 5.9+.
+> ✅ **Project Status: 100% Fully Migrated!**  
+> All feature screens, view models, background services, and educational samples in this repository have been fully migrated to Apple's modern **Observation Framework (`@Observable`)** with **Constructor Dependency Injection**. There are zero `@Published` property wrappers or `ObservableObject` conformances remaining in executable code.
+
+This guide serves as our architectural reference and educational documentation detailing the official step-by-step refactoring patterns for modernizing SwiftUI applications from legacy Combine-based state management (`ObservableObject`, `@Published`, `@StateObject`) to Apple's modern **Observation Framework (`@Observable`)** (iOS 17 / Swift 5.9+ / Swift 6).
 
 > **Official Apple Documentation:**  
 > 🔗 [Migrating from the Observable Object Protocol to the Observable Macro](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro)
@@ -198,15 +201,22 @@ class HomeViewModel {
 
 Use this checklist to verify all files in this project adhere to the modern iOS 17+ standard:
 
-- [x] **`HomeViewModel.swift`**: Uses `@Observable @MainActor` with standard `var` properties (Zero `@Published`).
+- [x] **`HomeViewModel.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & standard `var` properties (Zero `@Published`, zero `@Injected` boilerplate).
 - [x] **`HomeView.swift`**: Uses `@State private var homeViewModel = HomeViewModel()`.
+- [x] **`UserSearchViewModel.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & standard `var` properties (Zero `@Published`).
+- [x] **`UserSearchView.swift`**: Uses `@State private var viewModel = UserSearchViewModel()`.
+- [x] **`UserProfileViewModel.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & standard `var` properties (Zero `@Published`).
+- [x] **`UserProfileView.swift`**: Uses `@State private var viewModel = UserProfileViewModel()`.
+- [x] **`FavoritesManager.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & direct instantiation in test suites.
 - [x] **`SwiftDataOfflineViewModel.swift`**: Uses `@Observable @MainActor` with 4 normalized SwiftData tables and structured concurrency.
 - [x] **`SwiftDataOfflineStorageView.swift`**: Uses `@State` and `@Bindable` for clean two-way UI bindings.
 - [x] **`ApiClient.swift`**: Conforms to `Sendable` with native `URLSession` `async/await`.
 - [x] **`SearchItem.swift`**: Conforms to `Decodable, Hashable, Identifiable, Sendable`.
-- [ ] **`MemoryLeakDetectionView.swift`**: Refactor educational demo classes from `ObservableObject` + `@Published` to `@Observable`.
-- [ ] **`StatePropertyWrappersView.swift`**: Refactor sample view models to modern `@Observable` + `@Bindable`.
-- [ ] **`HomeViewModel.swift`**: Refactor `@ObservationIgnored @Injected` properties to modern constructor injection with defaults.
+- [x] **`MemoryLeakDetectionView.swift`**: Migrated `LeakyViewModel`, `NotificationLeakyView`, and `FixedViewModel` to `@Observable` & `@State`.
+- [x] **`StatePropertyWrappersView.swift`**: Migrated `CounterViewModel` to `@Observable` & `@State` with modern comparison card.
+- [x] **`BluetoothBeaconService.swift`**: Migrated from `ObservableObject` to `@Observable @MainActor` (zero `@Published`).
+- [x] **`LocationManagerService.swift`**: Migrated from `ObservableObject` to `@Observable @MainActor` (zero `@Published`).
+- [x] **`LocationDataPipelineQueue.swift`**: Migrated from `ObservableObject` to `@Observable @MainActor` (zero `@Published`).
 
 ---
 

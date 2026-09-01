@@ -11,7 +11,7 @@ import CoreLocation
 
 /// Interactive Sample View for BLE Peripheral Scanning, RSSI monitoring, and iBeacon ranging
 public struct BluetoothBeaconSampleView: View {
-    @StateObject private var bluetoothService = BluetoothBeaconService.shared
+    @State private var bluetoothService = BluetoothBeaconService.shared
     @State private var selectedTab: Int = 0
 
     public init() {}

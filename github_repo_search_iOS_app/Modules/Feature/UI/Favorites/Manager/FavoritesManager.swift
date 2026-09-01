@@ -178,13 +178,18 @@ struct FavoriteRepository: Codable, Identifiable {
 final class FavoritesManager {
     static let shared = FavoritesManager()
 
-    @ObservationIgnored @Injected(\.favoritesRepository) private var repository
-    @ObservationIgnored @Injected(\.analyticsService) private var analytics
+    private let repository: FavoritesRepository
+    private let analytics: AnalyticsService
 
     var favoriteUsers: [FavoriteUser] = []
     var favoriteRepositories: [FavoriteRepository] = []
 
-    private init() {
+    init(
+        repository: FavoritesRepository? = nil,
+        analytics: AnalyticsService? = nil
+    ) {
+        self.repository = repository ?? DependencyContainer.shared.favoritesRepository
+        self.analytics = analytics ?? DependencyContainer.shared.analyticsService
         Task {
             await loadFavorites()
         }

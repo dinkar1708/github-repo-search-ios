@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Combine
 import Network
+import Observation
 
 /// Unified SDK Telemetry Packet combining GPS and BLE data
 struct SDKTelemetryPacket: Identifiable, Codable {
@@ -50,7 +50,7 @@ struct SDKTelemetryPacket: Identifiable, Codable {
     }
 }
 
-/// Statistics for telemetry data pipeline operations
+/// Dynamic Pipeline Processing Metrics
 struct PipelineMetrics {
     var totalPointsIngested: Int = 0
     var totalBatchesFlushed: Int = 0
@@ -62,19 +62,20 @@ struct PipelineMetrics {
 }
 
 /// Robust Local Ingestion Buffer and Upload Pipeline Queue with Network State Monitoring
+@Observable
 @MainActor
-final class LocationDataPipelineQueue: ObservableObject {
+final class LocationDataPipelineQueue {
     static let shared = LocationDataPipelineQueue()
 
-    @Published private(set) var pendingQueue: [SDKTelemetryPacket] = []
-    @Published private(set) var metrics = PipelineMetrics()
-    @Published private(set) var isAutoFlushing: Bool = true
-    @Published private(set) var isOnline: Bool = true
-    @Published private(set) var connectionType: String = "Wi-Fi"
-    @Published var isSimulatingOffline: Bool = false
-    @Published private(set) var recentLogs: [LifecycleLogEntry] = []
-    @Published var batchSizeThreshold: Int = 10
-    @Published var autoFlushIntervalSeconds: Double = 15.0
+    private(set) var pendingQueue: [SDKTelemetryPacket] = []
+    private(set) var metrics = PipelineMetrics()
+    private(set) var isAutoFlushing: Bool = true
+    private(set) var isOnline: Bool = true
+    private(set) var connectionType: String = "Wi-Fi"
+    var isSimulatingOffline: Bool = false
+    private(set) var recentLogs: [LifecycleLogEntry] = []
+    var batchSizeThreshold: Int = 10
+    var autoFlushIntervalSeconds: Double = 15.0
 
     private var flushTimer: Timer?
     private let networkMonitor = NWPathMonitor()

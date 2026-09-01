@@ -10,6 +10,7 @@
 
 import SwiftUI
 import Combine
+import Observation
 
 struct MemoryLeakDetectionView: View {
     @State private var activeExample: String? = nil
@@ -251,9 +252,10 @@ struct TimerLeakExample: View {
 
 // MARK: - Example 2: Closure Capture Leak
 
-class LeakyViewModel: ObservableObject {
-    @Published var count = 0
-    var workItem: DispatchWorkItem?
+@Observable
+class LeakyViewModel {
+    var count = 0
+    @ObservationIgnored var workItem: DispatchWorkItem?
 
     // BAD: Strong self in closure
     func startBadWork() {
@@ -275,7 +277,7 @@ class LeakyViewModel: ObservableObject {
 }
 
 struct ClosureCaptureExample: View {
-    @StateObject private var viewModel = LeakyViewModel()
+    @State private var viewModel = LeakyViewModel()
 
     var body: some View {
         VStack(spacing: 12) {
@@ -306,8 +308,9 @@ struct ClosureCaptureExample: View {
 
 // MARK: - Example 3: NotificationCenter Leak
 
-class NotificationLeakyView: ObservableObject {
-    @Published var message = "Waiting..."
+@Observable
+class NotificationLeakyView {
+    var message = "Waiting..."
 
     init() {
         // BAD: Observer added but never removed
@@ -331,7 +334,7 @@ class NotificationLeakyView: ObservableObject {
 }
 
 struct NotificationLeakExample: View {
-    @StateObject private var viewModel = NotificationLeakyView()
+    @State private var viewModel = NotificationLeakyView()
 
     var body: some View {
         VStack(spacing: 12) {
@@ -363,11 +366,12 @@ struct NotificationLeakExample: View {
 
 // MARK: - Example 4: Fixed Pattern
 
-class FixedViewModel: ObservableObject {
-    @Published var count = 0
-    @Published var message = "Ready"
-    private var timer: Timer?
-    private var cancellables = Set<AnyCancellable>()
+@Observable
+class FixedViewModel {
+    var count = 0
+    var message = "Ready"
+    @ObservationIgnored private var timer: Timer?
+    @ObservationIgnored private var cancellables = Set<AnyCancellable>()
 
     // GOOD: Using weak self
     func startGoodWork() {
@@ -403,7 +407,7 @@ class FixedViewModel: ObservableObject {
 }
 
 struct FixedExample: View {
-    @StateObject private var viewModel = FixedViewModel()
+    @State private var viewModel = FixedViewModel()
     @State private var timer: Timer?
 
     var body: some View {
