@@ -10,8 +10,8 @@ import CoreLocation
 
 /// Interactive Sample View demonstrating One-Time, Continuous, Background Location, and Geofencing tracking
 public struct LocationTrackingSampleView: View {
-    @StateObject private var locationService = LocationManagerService.shared
-    @StateObject private var pipelineQueue = LocationDataPipelineQueue.shared
+    @State private var locationService = LocationManagerService.shared
+    @State private var pipelineQueue = LocationDataPipelineQueue.shared
     @State private var selectedTab: Int = 0
 
     public init() {}

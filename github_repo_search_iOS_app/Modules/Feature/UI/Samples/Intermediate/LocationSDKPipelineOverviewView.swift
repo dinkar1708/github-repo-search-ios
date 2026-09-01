@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Architecture Overview & Interactive Data Pipeline Simulator for Location and BLE Data Ingestion
 public struct LocationSDKPipelineOverviewView: View {
-    @StateObject private var pipeline = LocationDataPipelineQueue.shared
+    @State private var pipeline = LocationDataPipelineQueue.shared
     @State private var selectedTab: Int = 0
 
     public init() {}

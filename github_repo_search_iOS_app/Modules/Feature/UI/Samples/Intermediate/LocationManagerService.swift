@@ -77,19 +77,20 @@ struct LocationTelemetryPoint: Identifiable, Codable {
 }
 
 /// Comprehensive Location Manager Service supporting One-Time, Continuous, Background, and Geofencing tracking
+@Observable
 @MainActor
-final class LocationManagerService: NSObject, ObservableObject {
+final class LocationManagerService: NSObject {
     static let shared = LocationManagerService()
 
-    @Published private(set) var authorizationStatus: CLAuthorizationStatus = .notDetermined
-    @Published private(set) var isLocationServicesEnabled: Bool = CLLocationManager.locationServicesEnabled()
-    @Published private(set) var currentTrackingMode: LocationTrackingMode = .idle
-    @Published private(set) var lastLocation: CLLocation?
-    @Published private(set) var locationHistory: [LocationTelemetryPoint] = []
-    @Published private(set) var recentLogs: [LifecycleLogEntry] = []
-    @Published private(set) var monitoredRegions: [CLCircularRegion] = []
-    @Published private(set) var insideRegions: Set<String> = []
-    @Published private(set) var isSimulating: Bool = false
+    private(set) var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    private(set) var isLocationServicesEnabled: Bool = CLLocationManager.locationServicesEnabled()
+    private(set) var currentTrackingMode: LocationTrackingMode = .idle
+    private(set) var lastLocation: CLLocation?
+    private(set) var locationHistory: [LocationTelemetryPoint] = []
+    private(set) var recentLogs: [LifecycleLogEntry] = []
+    private(set) var monitoredRegions: [CLCircularRegion] = []
+    private(set) var insideRegions: Set<String> = []
+    private(set) var isSimulating: Bool = false
 
     private let locationManager = CLLocationManager()
     private var simulationTimer: Timer?
