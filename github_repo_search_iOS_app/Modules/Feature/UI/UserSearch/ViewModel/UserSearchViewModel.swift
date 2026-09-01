@@ -12,9 +12,9 @@ import OSLog
 @Observable
 @MainActor
 final class UserSearchViewModel {
-    @ObservationIgnored @Injected(\.githubRepository) private var repository
-    @ObservationIgnored @Injected(\.analyticsService) private var analytics
-    @ObservationIgnored @Injected(\.cacheService) private var cache
+    private let repository: GithubRepository
+    private let analytics: AnalyticsService
+    private let cache: CacheService
 
     private let logger = Logger.viewModel
 
@@ -27,7 +27,15 @@ final class UserSearchViewModel {
 
     private var searchTask: Task<Void, Never>?
 
-    init() { }
+    init(
+        repository: GithubRepository? = nil,
+        analytics: AnalyticsService? = nil,
+        cache: CacheService? = nil
+    ) {
+        self.repository = repository ?? DependencyContainer.shared.githubRepository
+        self.analytics = analytics ?? DependencyContainer.shared.analyticsService
+        self.cache = cache ?? DependencyContainer.shared.cacheService
+    }
 
     func searchUsers() {
         searchTask?.cancel()

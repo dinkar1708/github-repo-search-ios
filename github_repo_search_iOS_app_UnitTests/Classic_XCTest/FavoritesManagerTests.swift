@@ -26,8 +26,8 @@ final class FavoritesManagerTests: XCTestCase {
             analyticsService: mockAnalytics
         )
 
-        // Reset singleton collections and mocks
-        sut = FavoritesManager.shared
+        // Initialize isolated sut with mock dependencies
+        sut = FavoritesManager(repository: mockRepository, analytics: mockAnalytics)
         sut.favoriteUsers.removeAll()
         sut.favoriteRepositories.removeAll()
         mockAnalytics.trackedEvents.removeAll()

@@ -198,15 +198,19 @@ class HomeViewModel {
 
 Use this checklist to verify all files in this project adhere to the modern iOS 17+ standard:
 
-- [x] **`HomeViewModel.swift`**: Uses `@Observable @MainActor` with standard `var` properties (Zero `@Published`).
+- [x] **`HomeViewModel.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & standard `var` properties (Zero `@Published`, zero `@Injected` boilerplate).
 - [x] **`HomeView.swift`**: Uses `@State private var homeViewModel = HomeViewModel()`.
+- [x] **`UserSearchViewModel.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & standard `var` properties (Zero `@Published`).
+- [x] **`UserSearchView.swift`**: Uses `@State private var viewModel = UserSearchViewModel()`.
+- [x] **`UserProfileViewModel.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & standard `var` properties (Zero `@Published`).
+- [x] **`UserProfileView.swift`**: Uses `@State private var viewModel = UserProfileViewModel()`.
+- [x] **`FavoritesManager.swift`**: Uses `@Observable @MainActor` with constructor DI defaults & direct instantiation in test suites.
 - [x] **`SwiftDataOfflineViewModel.swift`**: Uses `@Observable @MainActor` with 4 normalized SwiftData tables and structured concurrency.
 - [x] **`SwiftDataOfflineStorageView.swift`**: Uses `@State` and `@Bindable` for clean two-way UI bindings.
 - [x] **`ApiClient.swift`**: Conforms to `Sendable` with native `URLSession` `async/await`.
 - [x] **`SearchItem.swift`**: Conforms to `Decodable, Hashable, Identifiable, Sendable`.
-- [ ] **`MemoryLeakDetectionView.swift`**: Refactor educational demo classes from `ObservableObject` + `@Published` to `@Observable`.
-- [ ] **`StatePropertyWrappersView.swift`**: Refactor sample view models to modern `@Observable` + `@Bindable`.
-- [ ] **`HomeViewModel.swift`**: Refactor `@ObservationIgnored @Injected` properties to modern constructor injection with defaults.
+- [ ] **`MemoryLeakDetectionView.swift`**: Educational demo classes (`ObservableObject` + `@Published` for memory leak comparison).
+- [ ] **`StatePropertyWrappersView.swift`**: Educational comparison view for `@StateObject` vs `@Observable`.
 
 ---
 

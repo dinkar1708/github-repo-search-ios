@@ -16,12 +16,9 @@ import OSLog
 @Observable
 @MainActor
 class HomeViewModel {
-    // TODO: Refactor to modern iOS 17+ Constructor Injection:
-    // Replace `@ObservationIgnored @Injected` with `private let` constructor properties initialized with defaults
-    // to eliminate boilerplate and avoid mutating global static container in unit tests.
-    @ObservationIgnored @Injected(\.githubRepository) private var gitHubRepository
-    @ObservationIgnored @Injected(\.analyticsService) private var analytics
-    @ObservationIgnored @Injected(\.cacheService) private var cache
+    private let gitHubRepository: GithubRepository
+    private let analytics: AnalyticsService
+    private let cache: CacheService
 
     private let logger = Logger.viewModel
     private var searchTask: Task<Void, Never>?
@@ -42,9 +39,16 @@ class HomeViewModel {
 
     var searchItems = [SearchItem]()
 
-    init(state: MessageState = .loaded) {
-        // initialize state - start with loaded (empty) instead of loading
-        messageState = state
+    init(
+        state: MessageState = .loaded,
+        gitHubRepository: GithubRepository? = nil,
+        analytics: AnalyticsService? = nil,
+        cache: CacheService? = nil
+    ) {
+        self.messageState = state
+        self.gitHubRepository = gitHubRepository ?? DependencyContainer.shared.githubRepository
+        self.analytics = analytics ?? DependencyContainer.shared.analyticsService
+        self.cache = cache ?? DependencyContainer.shared.cacheService
     }
 
     private func handleSearchTextChange() {
